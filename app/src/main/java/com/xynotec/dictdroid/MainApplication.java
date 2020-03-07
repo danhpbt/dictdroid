@@ -20,5 +20,6 @@ public class MainApplication extends DaggerApplication {
         component.inject(this);
 
         return component;
+		
     }
 }
