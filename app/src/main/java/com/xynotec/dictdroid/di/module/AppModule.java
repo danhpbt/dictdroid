@@ -3,6 +3,8 @@ package com.xynotec.dictdroid.di.module;
 import android.app.Application;
 import android.content.Context;
 
+import com.xynotec.dictdroid.data.local.prefs.AppPreferencesHelper;
+import com.xynotec.dictdroid.data.local.prefs.PreferencesHelper;
 import com.xynotec.dictdroid.engine.DictEngine;
 import com.xynotec.dictdroid.engine.DictEngineInternal;
 
@@ -25,6 +27,12 @@ public class AppModule {
     @Singleton
     DictEngine provideDictEngine(Context context) {
         return new DictEngineInternal(context);
+    }
+
+    @Singleton
+    @Provides
+    PreferencesHelper providePreferencesHelper(AppPreferencesHelper appPreferencesHelper){
+        return appPreferencesHelper;
     }
 
     @Provides

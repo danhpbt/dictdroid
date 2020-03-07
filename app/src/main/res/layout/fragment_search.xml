@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.xynotec.dictdroid.ui.main.search.SearchViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewFlipper" >
+
+            <!--ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/listWord"
+                android:choiceMode="singleChoice"
+                android:divider="@color/colorDivider"
+                android:background="@color/dark_gray"
+                android:dividerHeight="1dip" /-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvWord"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@layout/search_fragment_rv_item"
+                />
+
+            <com.xynotec.dictdroid.control.MeanView
+                android:id="@+id/meanView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </com.xynotec.dictdroid.control.MeanView>
+        </ViewFlipper>
+
+    </LinearLayout>
+
+</layout>

@@ -10,8 +10,8 @@ import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.xynotec.dictdroid.R;
-import com.xynotec.dictdroid.MainActivity;
+import com.xynotec.dictdroid.ende.R;
+import com.xynotec.dictdroid.ui.main.MainActivity;
 //import com.xynotec.dictdroid.data.GlobalData;
 
 public class SplashScreen extends AppCompatActivity

@@ -53,7 +53,4 @@ public abstract class BaseFragment<V extends ViewModel> extends DaggerFragment {
         }
     }
 
-    public AppCompatActivity getBaseActivity() {
-        return mActivity;
-    }
 }

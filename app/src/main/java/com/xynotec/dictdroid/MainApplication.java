@@ -9,6 +9,11 @@ import dagger.android.DaggerApplication;
 
 public class MainApplication extends DaggerApplication {
 
+    static
+    {
+        System.loadLibrary("dictdroid");
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

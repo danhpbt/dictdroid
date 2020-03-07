@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.xynotec.dictdroid.ui.main.favorite.FavoriteViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listFavorite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/colorDivider"
+            android:dividerHeight="1dp"
+            android:background="@color/colorAccent"
+            android:choiceMode="multipleChoiceModal" />
+
+    </LinearLayout>
+
+</layout>

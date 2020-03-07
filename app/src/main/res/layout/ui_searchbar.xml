@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp"
+    android:paddingTop="5dp" >
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchText"
+        android:hint="@string/str_hint_search_bar"
+        android:background="@drawable/searchbar_bg_selector"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/colorTextHint"
+        android:imeOptions="actionDone"
+        android:ellipsize="end"
+        android:paddingLeft="8dp"
+        android:paddingRight="45dp"
+        android:singleLine="true"
+        android:textCursorDrawable="@drawable/edittext_cursor" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_clear"
+        app:srcCompat="@drawable/ic_img_sb_clear"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="6dp"
+        android:padding="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_voice_reg"
+        app:srcCompat="@drawable/ic_img_sb_mic"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="6dp"
+        android:padding="10dp" />
+
+
+
+</FrameLayout>

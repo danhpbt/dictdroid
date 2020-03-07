@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/group_feature"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_quick_search"
+            android:icon="@drawable/ic_menu_quick_search"
+            android:title="@string/title_quick_search" />
     </group>
+
+    <group android:id="@+id/group_social"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_rate"
+            android:icon="@drawable/ic_menu_rate_app"
+            android:title="@string/title_rate_app" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share_app"
+            android:title="@string/title_share_app" />
+        <item
+            android:id="@+id/nav_more"
+            android:icon="@drawable/ic_menu_more_apps"
+            android:title="@string/title_more_app" />
+    </group>
+
+    <group android:id="@+id/group_settings"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_remove_ads"
+            android:icon="@drawable/ic_menu_remove_ads"
+            android:title="@string/title_remove_ads" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="@string/title_settings" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_about"
+            android:title="@string/title_about" />
+    </group>
+
 </menu>
