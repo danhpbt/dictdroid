@@ -10,6 +10,7 @@ import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.xynotec.dictdroid.data.GlobalData;
 import com.xynotec.dictdroid.ende.R;
 import com.xynotec.dictdroid.ui.main.MainActivity;
 //import com.xynotec.dictdroid.data.GlobalData;
@@ -30,7 +31,7 @@ public class SplashScreen extends AppCompatActivity
 		getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
 		if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT)
 		{
-			//GlobalData.colorBackground = String.format("#%06X", (0xFFFFFF & a.data));
+			GlobalData.colorBackground = String.format("#%06X", (0xFFFFFF & a.data));
 		}
 
 		new Handler().postDelayed(new Runnable() {

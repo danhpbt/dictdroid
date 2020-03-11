@@ -13,6 +13,18 @@ public class Favorite extends RealmObject {
     @Required //not null
     private String mean;
 
+    public Favorite()
+    {
+        word = "";
+        mean = "";
+    }
+
+    public Favorite(String word, String mean)
+    {
+        this.word = word;
+        this.mean = mean;
+    }
+
     public String getWord() {
         return word;
     }

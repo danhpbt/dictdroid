@@ -1,31 +1,27 @@
 package com.xynotec.dictdroid.ui.main;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.Menu;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.xynotec.dagger.BaseActivity;
 import com.xynotec.dagger.BaseViewModel;
+import com.xynotec.dictdroid.ViewModelProviderFactory;
 import com.xynotec.dictdroid.adapters.FixedIconTabsAdapter;
 import com.xynotec.dictdroid.control.SearchBar;
-import com.xynotec.dictdroid.data.local.prefs.AppPreferencesHelper;
+import com.xynotec.dictdroid.ende.BR;
 import com.xynotec.dictdroid.ende.R;
+import com.xynotec.dictdroid.ende.databinding.ActivityMainBinding;
 import com.xynotec.dictdroid.engine.DictEngine;
 import com.xynotec.dictdroid.ui.main.search.SearchFragment;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
@@ -33,7 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity<BaseViewModel> implements
+public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewModel> implements
         SearchBar.OnSearchBarTextChange{
 
     final static int SEARCH_FRAGMENT = 0;
@@ -45,7 +41,9 @@ public class MainActivity extends BaseActivity<BaseViewModel> implements
     DictEngine dictEngine;
 
     @Inject
-    AppPreferencesHelper mAppPreferencesHelper;
+    ViewModelProviderFactory factory;
+
+    private MainViewModel mMainViewModel;
 
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.viewpager) ViewPager viewPager;
@@ -56,7 +54,7 @@ public class MainActivity extends BaseActivity<BaseViewModel> implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -112,6 +110,19 @@ public class MainActivity extends BaseActivity<BaseViewModel> implements
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    public MainViewModel getViewModel() {
+        mMainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        return mMainViewModel;
+//        mMainViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
+//        return mMainViewModel;
+    }
+
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
     }
 
     @Override

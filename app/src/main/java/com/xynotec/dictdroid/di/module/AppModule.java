@@ -3,6 +3,10 @@ package com.xynotec.dictdroid.di.module;
 import android.app.Application;
 import android.content.Context;
 
+import com.xynotec.dictdroid.data.AppDataManager;
+import com.xynotec.dictdroid.data.DataManager;
+import com.xynotec.dictdroid.data.local.db.AppDbHelper;
+import com.xynotec.dictdroid.data.local.db.DbHelper;
 import com.xynotec.dictdroid.data.local.prefs.AppPreferencesHelper;
 import com.xynotec.dictdroid.data.local.prefs.PreferencesHelper;
 import com.xynotec.dictdroid.engine.DictEngine;
@@ -33,6 +37,18 @@ public class AppModule {
     @Provides
     PreferencesHelper providePreferencesHelper(AppPreferencesHelper appPreferencesHelper){
         return appPreferencesHelper;
+    }
+
+    @Singleton
+    @Provides
+    DbHelper provideDbHelper(AppDbHelper appDbHelper){
+        return appDbHelper;
+    }
+
+    @Provides
+    @Singleton
+    DataManager provideDataManager(AppDataManager appDataManager) {
+        return appDataManager;
     }
 
     @Provides

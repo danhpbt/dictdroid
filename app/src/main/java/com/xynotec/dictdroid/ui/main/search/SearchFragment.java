@@ -2,30 +2,33 @@ package com.xynotec.dictdroid.ui.main.search;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xynotec.dagger.BaseFragment;
+import com.xynotec.dictdroid.ViewModelProviderFactory;
 import com.xynotec.dictdroid.control.MeanView;
+import com.xynotec.dictdroid.ende.BR;
 import com.xynotec.dictdroid.ende.R;
+import com.xynotec.dictdroid.ende.databinding.FragmentSearchBinding;
+import com.xynotec.dictdroid.utils.HtmlConverter;
+import com.xynotec.utils.DeviceUtils;
 
 import javax.inject.Inject;
 
-public class SearchFragment extends BaseFragment<SearchViewModel> implements
+public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchViewModel> implements
         SearchFragmentAdapter.SearchFragmentAdapterListener{
     final static int SEARCH_VIEW = 0;
     final static int MEAN_VIEW = 1;
 
     int curView = SEARCH_VIEW;
-
 
     LinearLayoutManager linearLayoutManager;
     ViewFlipper viewFlipper;
@@ -35,9 +38,27 @@ public class SearchFragment extends BaseFragment<SearchViewModel> implements
     @Inject
     SearchFragmentAdapter mSearchFragmentAdapter;
 
+    @Inject
+    ViewModelProviderFactory factory;
+
+    SearchViewModel mSearchViewModel;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.fragment_search;
+    }
+
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public SearchViewModel getViewModel() {
+        mSearchViewModel = ViewModelProviders.of(this, factory).get(SearchViewModel.class);
+        //mSearchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
+        //new ViewModelProvider(this).get(SearchViewModel.class);
+        return mSearchViewModel;
     }
 
     @Override
@@ -59,7 +80,7 @@ public class SearchFragment extends BaseFragment<SearchViewModel> implements
 
         mSearchFragmentAdapter.setListener(this);
 
-        meanView = view.findViewById(R.id.meanView);
+        //meanView = view.findViewById(R.id.meanView);
     }
 
     @Override
@@ -83,14 +104,21 @@ public class SearchFragment extends BaseFragment<SearchViewModel> implements
     }
 
     void showMean(int index) {
+        viewFlipper.setDisplayedChild(MEAN_VIEW);
+        curView = MEAN_VIEW;
 
-//        Util.hideEmulatorKeyboard(getActivity());
+//        String word = mSearchFragmentAdapter.getDictEngine().GetWord(index);
+//        mSearchViewModel.setWordMean(word, "");
+//        viewFlipper.setDisplayedChild(MEAN_VIEW);
+
+//        DeviceUtils.hideEmulatorKeyboard(getActivity());
 //
 //        viewFlipper.setDisplayedChild(MEAN_VIEW);
 //        curView = MEAN_VIEW;
 //
 //        String word = mSearchFragmentAdapter.getDictEngine().GetWord(index);
-//        String mean = HtmlConverter.String_htmlEncode(mSearchFragmentAdapter.getDictEngine().GetMeanWord(index));
+//        String mean = HtmlConverter.String_htmlEncode(mSearchFragmentAdapter.getDictEngine().GetMeanWord(index),
+//                mSearchFragmentAdapter.getDictEngine().getDataSource());
 //
 //        //DictDbHelper.getInstance().AddHistory(word, mean);
 //
