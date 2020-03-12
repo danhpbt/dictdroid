@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.xynotec.dictdroid.data.GlobalData;
 import com.xynotec.dictdroid.ende.R;
 import com.xynotec.dictdroid.ui.main.MainActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 //import com.xynotec.dictdroid.data.GlobalData;
 
 public class SplashScreen extends AppCompatActivity
@@ -54,7 +57,6 @@ public class SplashScreen extends AppCompatActivity
         }, SPLASH_TIME);
 
 	}
-
 
 }
 
