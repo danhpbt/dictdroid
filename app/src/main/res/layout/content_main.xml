@@ -12,8 +12,7 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorAccent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"

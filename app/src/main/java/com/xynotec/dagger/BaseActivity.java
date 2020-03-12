@@ -33,10 +33,8 @@ public abstract class BaseActivity <T extends ViewDataBinding, V extends ViewMod
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutRes());
-        ButterKnife.bind(this);
-
         performDataBinding();
+        ButterKnife.bind(this);
     }
 
     public void hideKeyboard() {

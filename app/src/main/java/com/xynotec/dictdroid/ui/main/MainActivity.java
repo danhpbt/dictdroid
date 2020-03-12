@@ -29,7 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewModel> implements
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements
         SearchBar.OnSearchBarTextChange{
 
     final static int SEARCH_FRAGMENT = 0;
