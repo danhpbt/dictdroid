@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="historyVM"
             type="com.xynotec.dictdroid.ui.main.history.HistoryViewModel" />
 
     </data>
@@ -16,14 +16,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
+        <!--ListView
             android:id="@+id/listHistory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/colorDivider"
             android:dividerHeight="1dp"
             android:background="@color/colorPrimary"
-            android:choiceMode="multipleChoiceModal" />
+            android:choiceMode="multipleChoiceModal" /-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/history_fragment_rv_item" />
 
     </LinearLayout>
 
