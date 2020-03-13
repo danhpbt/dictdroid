@@ -5,21 +5,18 @@ import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.xynotec.dagger.BaseActivity;
-import com.xynotec.dagger.BaseViewModel;
 import com.xynotec.dictdroid.ViewModelProviderFactory;
 import com.xynotec.dictdroid.adapters.FixedIconTabsAdapter;
 import com.xynotec.dictdroid.control.SearchBar;
 import com.xynotec.dictdroid.ende.BR;
 import com.xynotec.dictdroid.ende.R;
 import com.xynotec.dictdroid.ende.databinding.ActivityMainBinding;
-import com.xynotec.dictdroid.engine.DictEngine;
 import com.xynotec.dictdroid.ui.main.search.SearchFragment;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
@@ -37,12 +34,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    @Inject
-    DictEngine dictEngine;
 
     @Inject
     ViewModelProviderFactory factory;
-
     private MainViewModel mMainViewModel;
 
     @BindView(R.id.tabs) TabLayout tabLayout;
@@ -70,8 +64,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         searchBar.setOnSearchBarTextChange(this);
 
         setupViewPager(viewPager);
-
-        dictEngine.OpenDict("ende.mdo");
     }
 
     NavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
@@ -114,7 +106,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public MainViewModel getViewModel() {
-        mMainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mMainViewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
         return mMainViewModel;
 //        mMainViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
 //        return mMainViewModel;

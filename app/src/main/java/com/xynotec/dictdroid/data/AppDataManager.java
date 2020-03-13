@@ -8,6 +8,7 @@ import com.xynotec.dictdroid.data.local.db.DbHelper;
 import com.xynotec.dictdroid.data.local.prefs.PreferencesHelper;
 import com.xynotec.dictdroid.data.model.Favorite;
 import com.xynotec.dictdroid.data.model.History;
+import com.xynotec.dictdroid.engine.DictEngine;
 
 import java.util.List;
 
@@ -20,15 +21,48 @@ public class AppDataManager implements DataManager {
 
     private final Context mContext;
 
+    private final DictEngine mDictEngine;
+
     private final DbHelper mDbHelper;
 
     private final PreferencesHelper mPreferencesHelper;
 
     @Inject
-    public AppDataManager(Context mContext, DbHelper mDbHelper, PreferencesHelper mPreferencesHelper) {
+    public AppDataManager(Context mContext, DictEngine dictEngine, DbHelper mDbHelper, PreferencesHelper mPreferencesHelper) {
+        this.mDictEngine = dictEngine;
         this.mContext = mContext;
         this.mDbHelper = mDbHelper;
         this.mPreferencesHelper = mPreferencesHelper;
+    }
+
+    @Override
+    public void openDict(String path) {
+        mDictEngine.OpenDict(path);
+    }
+
+    @Override
+    public int numWordInDict() {
+        return mDictEngine.GetNumWordInDic();
+    }
+
+    @Override
+    public int getDictSource() {
+        return mDictEngine.getDataSource();
+    }
+
+    @Override
+    public String getDictWord(int index) {
+        return mDictEngine.GetWord(index);
+    }
+
+    @Override
+    public String getMeanWord(int index) {
+        return mDictEngine.GetMeanWord(index);
+    }
+
+    @Override
+    public int onDictSearch(String word) {
+        return mDictEngine.OnEditSearch(word);
     }
 
     public LiveData<List<History>> getHistories()
@@ -126,6 +160,7 @@ public class AppDataManager implements DataManager {
         mPreferencesHelper.setZoomScale(scale);
     }
 
+    @Override
     public int getZoomScale()
     {
         return mPreferencesHelper.getZoomScale();

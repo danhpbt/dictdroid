@@ -5,7 +5,7 @@ import com.xynotec.dictdroid.data.DataManager;
 
 public class TranslateViewModel extends BaseViewModel {
 
-//    public TranslateViewModel(DataManager dataManager) {
-//        super(dataManager);
-//    }
+    public TranslateViewModel(DataManager dataManager) {
+        super(dataManager);
+    }
 }

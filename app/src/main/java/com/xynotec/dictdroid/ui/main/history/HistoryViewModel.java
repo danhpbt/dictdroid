@@ -5,7 +5,7 @@ import com.xynotec.dictdroid.data.DataManager;
 
 public class HistoryViewModel extends BaseViewModel {
 
-//    public HistoryViewModel(DataManager dataManager) {
-//        super(dataManager);
-//    }
+    public HistoryViewModel(DataManager dataManager) {
+        super(dataManager);
+    }
 }

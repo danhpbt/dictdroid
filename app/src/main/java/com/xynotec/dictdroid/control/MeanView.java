@@ -39,8 +39,6 @@ public class MeanView extends LinearLayout
 	private static final String ENCODING = "UTF-8";
 	
 	private Context _context;
-	private String _word;
-	private String _mean;
 
 	ImageView _btnFavorite;
 	ImageView _btnSpeaker;
@@ -155,6 +153,10 @@ public class MeanView extends LinearLayout
     
     public void setWordMean(String word, String mean)
     {
+		_textWord.setText(word);
+		_webMean.loadDataWithBaseURL(null, mean,
+			MIMETYPE, ENCODING, "about:blank");
+
 //        meanViewModel.setWordMean(word, mean);
 //    	_word = word;
 //    	_mean = mean;
@@ -208,7 +210,7 @@ public class MeanView extends LinearLayout
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Speak(_word);
+			//Speak(_word);
 		}
 	};
 	

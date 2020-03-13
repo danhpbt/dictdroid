@@ -1,5 +1,6 @@
 package com.xynotec.dictdroid;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,35 +15,36 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFactory {
+public class ViewModelProviderFactory implements ViewModelProvider.Factory {
 
-    private final DataManager dataManager;
+    private final DataManager mDataManager;
 
     @Inject
     public ViewModelProviderFactory(DataManager dataManager) {
-        this.dataManager = dataManager;
+        mDataManager = dataManager;
     }
 
+    @NonNull
     @Override
-    public <T extends ViewModel> T create(Class<T> modelClass) {
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
-            //noinspection unchecked
-            return (T) new MainViewModel();
-        } else if (modelClass.isAssignableFrom(SearchViewModel.class)) {
-            //noinspection unchecked
-            return (T) new SearchViewModel();
-        } else if (modelClass.isAssignableFrom(HistoryViewModel.class)) {
-            //noinspection unchecked
-            return (T) new HistoryViewModel();
-        } else if (modelClass.isAssignableFrom(FavoriteViewModel.class)) {
-            //noinspection unchecked
-            return (T) new FavoriteViewModel();
+            return (T) new MainViewModel(mDataManager);
+        }
+        else if (modelClass.isAssignableFrom(SearchViewModel.class)) {
+            return (T) new SearchViewModel(mDataManager);
+        }
+        else if (modelClass.isAssignableFrom(HistoryViewModel.class)) {
+            return (T) new HistoryViewModel(mDataManager);
+        }
+        else if (modelClass.isAssignableFrom(FavoriteViewModel.class)) {
+            return (T) new FavoriteViewModel(mDataManager);
         }
         else if (modelClass.isAssignableFrom(TranslateViewModel.class)) {
-            //noinspection unchecked
-            return (T) new TranslateViewModel();
+            return (T) new TranslateViewModel(mDataManager);
         }
-        throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
+
+        //noinspection unchecked
+        throw new IllegalArgumentException("Unknown ViewModel class");
     }
 
 }

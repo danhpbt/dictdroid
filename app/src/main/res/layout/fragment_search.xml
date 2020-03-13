@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/viewFlipper"
-            app:flipperIndex="@{0}">
+            app:flipperIndex="@{viewModel.getViewDisplay()}" >
 
             <!--ListView
                 android:layout_width="match_parent"
@@ -37,22 +37,16 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/search_fragment_rv_item"
-                />
+                app:rvScrollToPosition="@{viewModel.getWordIndex()}" />
 
-            <!--com.xynotec.dictdroid.control.MeanView
+            <com.xynotec.dictdroid.control.MeanView
                 android:id="@+id/meanView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-            </com.xynotec.dictdroid.control.MeanView-->
+                android:layout_height="match_parent"
+                app:mvWord="@{viewModel.getWord()}"
+                app:mvMean="@{viewModel.getMean()}">
+            </com.xynotec.dictdroid.control.MeanView>
 
-            <TextView
-                android:id="@+id/textWord"
-                style="@style/mean_header_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="@{viewModel.getWord()}">
-            </TextView>
 
         </ViewFlipper>
 

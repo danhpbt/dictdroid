@@ -40,10 +40,6 @@ public abstract class BaseFragment<T extends ViewDataBinding,V extends ViewModel
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(getLayoutRes(), container, false);
-//        mUnbinder = ButterKnife.bind(this, view);
-//        return view;
-
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false);
         View mRootView = mViewDataBinding.getRoot();
         mUnbinder = ButterKnife.bind(this, mRootView);

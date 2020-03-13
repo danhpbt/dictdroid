@@ -29,7 +29,6 @@ public abstract class DictEngine
 	byte[] indexData = new byte[BLOCK_DATA_SIZE];
 	byte[] meaning = new byte[MAX_MEAN_SIZE];
 	
-	int totalWord;
 	int numblockInDic;
 	int numWordInDic;
 	int indexInBlock;
@@ -214,12 +213,7 @@ public abstract class DictEngine
 	{
 		return compare.compare(text1, text2);
 	}
-	
-	public int NumWordInDict()
-	{
-		return totalWord;
-	}
-	
+
 	public int OnEditSearch(String editText)
 	{		
 		int l1 = 1;

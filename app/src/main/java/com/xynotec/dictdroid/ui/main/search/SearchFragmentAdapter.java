@@ -12,16 +12,17 @@ import com.xynotec.dagger.BaseViewHolder;
 import com.xynotec.dictdroid.ende.databinding.SearchFragmentRvItemBinding;
 import com.xynotec.dictdroid.engine.DictEngine;
 
+import javax.inject.Inject;
+
 
 public class SearchFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private DictEngine mDictEngine;
-
     private SearchFragmentAdapterListener mListener;
 
-    public SearchFragmentAdapter(DictEngine dictEngine)
+    private SearchViewModel mSearchViewModel;
+    public SearchFragmentAdapter(SearchViewModel searchViewModel)
     {
-        this.mDictEngine = dictEngine;
+        this.mSearchViewModel = searchViewModel;
     }
 
     @NonNull
@@ -40,12 +41,7 @@ public class SearchFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mDictEngine.GetNumWordInDic();
-    }
-
-    public DictEngine getDictEngine()
-    {
-        return mDictEngine;
+        return mSearchViewModel.numWord();
     }
 
     public void setListener(SearchFragmentAdapterListener listener)
@@ -71,7 +67,7 @@ public class SearchFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
         @Override
         public void onBind(int position) {
-            final String word = mDictEngine.GetWord(position);
+            final String word = mSearchViewModel.getDataManager().getDictWord(position);
             mSearchViewItemModel = new SearchViewItemModel(position, word , this);
             mBinding.setViewModel(mSearchViewItemModel);
 
