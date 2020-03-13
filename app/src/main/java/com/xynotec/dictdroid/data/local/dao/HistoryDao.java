@@ -44,7 +44,8 @@ public class HistoryDao {
     {
         realm.beginTransaction();
 
-        realm.copyFromRealm(history);
+        //realm.copyFromRealm(history);
+        realm.insertOrUpdate(history);
 
         realm.commitTransaction();
     }
