@@ -23,7 +23,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public int getBindingVariable() {
-        return BR.viewModel;
+        return BR.favoriteVM;
     }
 
     @Override

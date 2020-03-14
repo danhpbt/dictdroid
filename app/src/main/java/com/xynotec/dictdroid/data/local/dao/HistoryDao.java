@@ -26,7 +26,7 @@ public class HistoryDao {
 
     public LiveData<List<History>> getHistories()
     {
-        return new LiveRealmResults<>(realm.where(History.class).findAllAsync());
+        return new LiveRealmResults<>(realm.where(History.class).findAll());
     }
 
     private RealmResults<History> queryHistory(String word)
@@ -43,10 +43,7 @@ public class HistoryDao {
     public void insertHistory(History history)
     {
         realm.beginTransaction();
-
-        //realm.copyFromRealm(history);
         realm.insertOrUpdate(history);
-
         realm.commitTransaction();
     }
 

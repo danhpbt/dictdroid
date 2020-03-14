@@ -7,6 +7,7 @@ import androidx.databinding.ObservableInt;
 
 import com.xynotec.dagger.BaseViewModel;
 import com.xynotec.dictdroid.data.DataManager;
+import com.xynotec.dictdroid.data.model.History;
 import com.xynotec.dictdroid.utils.HtmlConverter;
 
 public class SearchViewModel extends BaseViewModel {
@@ -78,13 +79,22 @@ public class SearchViewModel extends BaseViewModel {
 
         String word = getDataManager().getDictWord(index);
         String mean = getDataManager().getMeanWord(index);
-        mean = HtmlConverter.String_htmlEncode(mean, getDataManager().getDictSource());
 
+        insertUpdateHistory(word, mean, getDataManager().getSourceLang());
+
+        mean = HtmlConverter.String_htmlEncode(mean, getDataManager().getDictSource());
         float zoomScale = getDataManager().getZoomScale()/100.0f;
         mean = HtmlConverter.update4ViewPort(mean, zoomScale);
 
         mWord.set(word);
         mMean.set(mean);
+    }
+
+    private void insertUpdateHistory(String word, String mean, int dictSource)
+    {
+        History history = new History();
+        history.setWordMean(word, mean, dictSource);
+        getDataManager().insertHistory(history);
     }
 
 //    public void setWordMean(String word, String mean)

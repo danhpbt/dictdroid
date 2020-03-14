@@ -1,7 +1,9 @@
 package com.xynotec.dictdroid.utils;
 
+import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
+import androidx.annotation.DrawableRes;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +26,14 @@ public final class BindingUtils {
     public static void scrollViewPagerToPosition(RecyclerView recyclerView, int position)
     {
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
-        linearLayoutManager.scrollToPositionWithOffset(position,0);
+        if (linearLayoutManager != null)
+            linearLayoutManager.scrollToPositionWithOffset(position,0);
+    }
+
+    @BindingAdapter("srcImageResId")
+    public static void setImageDrawable(ImageView view, @DrawableRes int drawableId) {
+        if (drawableId != 0) {
+            view.setImageResource(drawableId);
+        }
     }
 }

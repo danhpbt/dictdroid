@@ -1,43 +1,56 @@
 package com.xynotec.dictdroid.data.model;
 
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 public class Favorite extends RealmObject {
+
     @PrimaryKey
     @Required //not null
-    private String word;
+    String compoundKey;
+
+    private int dictLang;
 
     @Required //not null
-    private String mean;
+    String word;
 
-    public Favorite()
-    {
-        word = "";
-        mean = "";
-    }
+    @Required //not null
+    String mean;
 
-    public Favorite(String word, String mean)
+    @Required //not null
+    Date dateTime;
+
+    public void setWordMean(String word, String mean, int dictLang)
     {
+        this.dictLang = dictLang;
         this.word = word;
         this.mean = mean;
+        this.compoundKey = String.format("%d_%s", dictLang, word);
+        this.dateTime = new Date();
     }
 
-    public String getWord() {
+    public String getWord()
+    {
         return word;
     }
 
-    public void setWord(String word) {
-        this.word = word;
-    }
-
-    public String getMean() {
+    public String getMean()
+    {
         return mean;
     }
 
-    public void setMean(String mean) {
-        this.mean = mean;
+    public Date getDateTime()
+    {
+        return dateTime;
     }
+
+    public int getDictLang()
+    {
+        return dictLang;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.xynotec.dictdroid;
 
+import android.content.Context;
+
 import com.xynotec.dictdroid.di.component.AppComponent;
 import com.xynotec.dictdroid.di.component.DaggerAppComponent;
 
@@ -14,9 +16,16 @@ public class MainApplication extends DaggerApplication {
         System.loadLibrary("dictdroid");
     }
 
+    private static Context context;
+    public static Context getContext()
+    {
+        return context;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
     }
 
     @Override

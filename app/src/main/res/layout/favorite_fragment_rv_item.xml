@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.xynotec.dictdroid.ui.main.favorite.FavoriteViewItemModel" />
+
+    </data>
+
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:background="?android:attr/activatedBackgroundIndicator">
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_arrow"
+            android:id="@+id/arrow"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" android:id="@+id/textLayout" android:layout_toRightOf="@+id/flag"
+            android:layout_toLeftOf="@+id/arrow"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/word"
+                style="@style/hf_word_list_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="@{viewModel.getWord()}">
+    </TextView>
+
+            <TextView
+                android:id="@+id/time"
+                style="@style/hf_time_list_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="@{viewModel.getDateTime()}"
+                android:paddingTop="4dp">
+    </TextView>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/flag"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            app:srcImageResId="@{viewModel.getFlagResource()}"/>
+
+    </RelativeLayout>
+
+</layout>

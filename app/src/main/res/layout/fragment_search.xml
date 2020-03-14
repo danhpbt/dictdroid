@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="searchVM"
             type="com.xynotec.dictdroid.ui.main.search.SearchViewModel" />
 
     </data>
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/viewFlipper"
-            app:flipperIndex="@{viewModel.getViewDisplay()}" >
+            app:flipperIndex="@{searchVM.getViewDisplay()}" >
 
             <!--ListView
                 android:layout_width="match_parent"
@@ -37,14 +37,14 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/search_fragment_rv_item"
-                app:rvScrollToPosition="@{viewModel.getWordIndex()}" />
+                app:rvScrollToPosition="@{searchVM.getWordIndex()}" />
 
             <com.xynotec.dictdroid.control.MeanView
                 android:id="@+id/meanView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:mvWord="@{viewModel.getWord()}"
-                app:mvMean="@{viewModel.getMean()}">
+                app:mvWord="@{searchVM.getWord()}"
+                app:mvMean="@{searchVM.getMean()}">
             </com.xynotec.dictdroid.control.MeanView>
 
 

@@ -55,7 +55,10 @@ public class AppModule {
     @Singleton
     RealmConfiguration provideRealmConfiguration(Context context) {
         Realm.init(context);
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
+        RealmConfiguration realmConfig = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
         Realm.setDefaultConfiguration(realmConfig);
         return realmConfig;
     }

@@ -25,7 +25,7 @@ public class TranslateFragment extends BaseFragment<FragmentTranslateBinding, Tr
 
     @Override
     public int getBindingVariable() {
-        return BR.viewModel;
+        return BR.translateVM;
     }
 
     @Override

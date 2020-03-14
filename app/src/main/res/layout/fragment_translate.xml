@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="translateVM"
             type="com.xynotec.dictdroid.ui.main.translate.TranslateViewModel" />
 
     </data>

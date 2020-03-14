@@ -44,7 +44,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
 
     @Override
     public int getBindingVariable() {
-        return BR.viewModel;
+        return BR.searchVM;
     }
 
     @Override

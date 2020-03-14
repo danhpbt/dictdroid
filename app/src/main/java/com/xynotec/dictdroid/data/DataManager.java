@@ -1,16 +1,32 @@
 package com.xynotec.dictdroid.data;
 
+import androidx.lifecycle.LiveData;
+
+import com.xynotec.dictdroid.data.model.Favorite;
+import com.xynotec.dictdroid.data.model.History;
+
+import java.util.List;
+
 public interface DataManager {
 
     //DictEngine
-    public abstract void openDict(String path);
-    public abstract int numWordInDict();
-    public abstract int getDictSource();
-    public abstract String getDictWord(int index);
-    public abstract String getMeanWord(int index);
-    public abstract int onDictSearch(String word);
+    void openDict(String path);
+    int numWordInDict();
+    int getDictSource();//LINGO_ LINGVOSOFT
+    int getSourceLang();
+    String getDictWord(int index);
+    String getMeanWord(int index);
+    int onDictSearch(String word);
 
     //AppPreferences
-    public abstract int getZoomScale();
+    int getZoomScale();
+
+
+    //LocalDataBase
+    void insertHistory(History history);
+    LiveData<List<History>> getHistories();
+    void insertFavorite(Favorite favorite);
+    LiveData<List<Favorite>> getFavorites();
+
 
 }

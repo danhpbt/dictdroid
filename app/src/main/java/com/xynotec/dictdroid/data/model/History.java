@@ -1,27 +1,28 @@
 package com.xynotec.dictdroid.data.model;
 
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 public class History extends RealmObject {
+
     @PrimaryKey
     @Required //not null
-    private String compoundKey;
+    String compoundKey;
 
     private int dictLang;
 
     @Required //not null
-    private String word;
+    String word;
 
     @Required //not null
-    private String mean;
+    String mean;
 
-    public History()
-    {
-
-    }
+    @Required //not null
+    Date dateTime;
 
     public void setWordMean(String word, String mean, int dictLang)
     {
@@ -29,21 +30,27 @@ public class History extends RealmObject {
         this.word = word;
         this.mean = mean;
         this.compoundKey = String.format("%d_%s", dictLang, word);
+        this.dateTime = new Date();
     }
 
-    public String getWord() {
+    public String getWord()
+    {
         return word;
     }
 
-    public void setWord(String word) {
-        this.word = word;
-    }
-
-    public String getMean() {
+    public String getMean()
+    {
         return mean;
     }
 
-    public void setMean(String mean) {
-        this.mean = mean;
+    public Date getDateTime()
+    {
+        return dateTime;
     }
+
+    public int getDictLang()
+    {
+        return dictLang;
+    }
+
 }

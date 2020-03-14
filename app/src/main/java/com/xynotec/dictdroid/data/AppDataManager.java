@@ -51,6 +51,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public int getSourceLang() {
+        return mDictEngine.getSourceLang();
+    }
+
+    @Override
     public String getDictWord(int index) {
         return mDictEngine.GetWord(index);
     }
@@ -65,21 +70,25 @@ public class AppDataManager implements DataManager {
         return mDictEngine.OnEditSearch(word);
     }
 
+    @Override
     public LiveData<List<History>> getHistories()
     {
         return mDbHelper.getHistories();
     }
 
+    @Override
     public LiveData<List<Favorite>> getFavorites()
     {
         return mDbHelper.getFavorites();
     }
 
+    @Override
     public void insertHistory(History history)
     {
         mDbHelper.insertHistory(history);
     }
 
+    @Override
     public void insertFavorite(Favorite favorite)
     {
         mDbHelper.insertFavorite(favorite);

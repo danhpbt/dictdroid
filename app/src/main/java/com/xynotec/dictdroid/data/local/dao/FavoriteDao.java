@@ -44,7 +44,8 @@ public class FavoriteDao {
     {
         realm.beginTransaction();
 
-        realm.copyFromRealm(favorite);
+        //realm.copyFromRealm(favorite);
+        realm.insertOrUpdate(favorite);
 
         realm.commitTransaction();
     }

@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="favoriteVM"
             type="com.xynotec.dictdroid.ui.main.favorite.FavoriteViewModel" />
 
     </data>
