@@ -99,16 +99,6 @@ public class SearchBar extends FrameLayout
     	_onSearchBarTextChange = textChange;
     }
     
-    public void hideEmulatorKeyboard(Activity activity)
-	{
-		//Method 1
-		if (activity != null)
-		{
-			InputMethodManager inputManager = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-			inputManager.hideSoftInputFromWindow(_editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-		}
-	}
-    
     private TextWatcher _tw = new TextWatcher() 
     {
 		@Override
