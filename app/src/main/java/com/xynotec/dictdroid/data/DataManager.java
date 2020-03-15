@@ -20,6 +20,8 @@ public interface DataManager {
 
     //AppPreferences
     int getZoomScale();
+    void setSwapDict(boolean bSwap);
+    boolean getSwapDict();
 
 
     //LocalDataBase

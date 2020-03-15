@@ -1,5 +1,6 @@
 package com.xynotec.dictdroid.utils;
 
+import android.app.Activity;
 import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
@@ -8,12 +9,19 @@ import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.xynotec.dagger.BaseActivity;
 import com.xynotec.dictdroid.control.MeanView;
+import com.xynotec.dictdroid.control.SearchBar;
+import com.xynotec.utils.DeviceUtils;
 
 public final class BindingUtils {
 
     @BindingAdapter({"mvWord", "mvMean"})
     public static void setMeanView(MeanView meanView, String word, String mean) {
+        //hide keyboard before display
+        Activity activity = (Activity)meanView.getContext();
+        DeviceUtils.hideEmulatorKeyboard(activity);
+
         meanView.setWordMean(word, mean);
     }
 
@@ -35,5 +43,10 @@ public final class BindingUtils {
         if (drawableId != 0) {
             view.setImageResource(drawableId);
         }
+    }
+
+    @BindingAdapter("searchBarHintText")
+    public static void setImageDrawable(SearchBar searchBar, String hint) {
+        searchBar.setHintText(hint);
     }
 }

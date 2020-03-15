@@ -38,7 +38,7 @@ public class FavoriteViewItemModel {
 
     public int getFlagResource()
     {
-        String symbol = LangConst.langToLocale.get(Integer.valueOf(mDictLang));
+        String symbol = LangConst.getSymbol(mDictLang);
         String flagFrom = String.format("flag_%s", symbol);
 
         Context context = MainApplication.getContext();

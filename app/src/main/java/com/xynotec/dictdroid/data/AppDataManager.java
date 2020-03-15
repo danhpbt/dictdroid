@@ -124,11 +124,13 @@ public class AppDataManager implements DataManager {
         return mPreferencesHelper.getToLangRecentIndex();
     }
 
+    @Override
     public void setSwapDict(boolean bSwap)
     {
         mPreferencesHelper.setSwapDict(bSwap);
     }
 
+    @Override
     public boolean getSwapDict()
     {
         return mPreferencesHelper.getSwapDict();

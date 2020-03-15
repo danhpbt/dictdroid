@@ -24,6 +24,31 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AlertDialogErrorStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">#F44336</item>
+    </style>
+
+    <style name="AlertDialogWarningStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">#FFC107</item>
+    </style>
+
+    <style name="AlertDialogSuccessStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">#4CAF50</item>
+    </style>
+
+    <style name="AlertDialogInfoStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">#03A9F4</item>
+    </style>
+
+
     <style name="dict_word_list_text" parent="@android:style/TextAppearance">
         <item name="android:textSize">18.0sp</item>
         <item name="android:textColor">@color/colorPrimaryText</item>

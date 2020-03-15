@@ -83,9 +83,6 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mSearchViewModel.openDict("ende.mdo");
-
     }
 
     @Override
@@ -102,8 +99,6 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
     }
 
     void showMean(int index) {
-        hideKeyboard();
-
         mSearchViewModel.showMean(index);
     }
 

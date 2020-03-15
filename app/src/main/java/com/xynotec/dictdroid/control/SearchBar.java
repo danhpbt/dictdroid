@@ -24,6 +24,9 @@ public class SearchBar extends FrameLayout
 	private EditText _editText;
 	private ImageView _imgClear;
 	private ImageView _imgVoice;
+	private ImageView _imgSwap;
+
+	final Context _context;
 
 	public static String curText = "";
 
@@ -36,7 +39,7 @@ public class SearchBar extends FrameLayout
     {
         super(context, attrs);
         
-        final Context _context = context;
+        _context = context;
         
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,27 +62,20 @@ public class SearchBar extends FrameLayout
                 
         _imgClear = findViewById(R.id.btn_clear);
         _imgClear.setVisibility(View.GONE);
-        _imgClear.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				_editText.setText("");
-
-				if(_editText.requestFocus()) 
-				{
-					InputMethodManager inputManager = (InputMethodManager)_context.getSystemService(Context.INPUT_METHOD_SERVICE);
-					inputManager.showSoftInput(_editText, InputMethodManager.SHOW_IMPLICIT);
-				}
-				
-				
-			}
-		});
+        _imgClear.setOnClickListener(onClickListener);
 
 		_imgVoice = findViewById(R.id.btn_voice_reg);
 		_imgVoice.setVisibility(View.VISIBLE);
+		_imgVoice.setOnClickListener(onClickListener);
+
+		_imgSwap = findViewById(R.id.btn_swap);
+		_imgSwap.setOnClickListener(onClickListener);
     }
-    
+
+    public void hideVoiceRecognition()
+	{
+		_imgVoice.setVisibility(View.VISIBLE);
+	}
     public void setHintText(String text)
     {
     	_editText.setHint(text);
@@ -138,11 +134,52 @@ public class SearchBar extends FrameLayout
 		}
 	};
 
+	OnClickListener onClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			int id = v.getId();
+			switch (id)
+			{
+				case R.id.btn_clear:
+					clearEditText();
+					break;
 
+				case R.id.btn_voice_reg:
+					voiceRegconition();
+					break;
+
+				case R.id.btn_swap:
+					break;
+			}
+		}
+	};
+
+	public void clearEditText()
+	{
+		_editText.setText("");
+
+		if(_editText.requestFocus())
+		{
+			InputMethodManager inputManager = (InputMethodManager)_context.getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputManager.showSoftInput(_editText, InputMethodManager.SHOW_IMPLICIT);
+		}
+	}
+
+	public void voiceRegconition()
+	{
+		_onSearchBarTextChange.onGoogleVoice();
+	}
+
+	public void swapDictionary()
+	{
+		_onSearchBarTextChange.onSwapDictionary();
+	}
 	
 	public interface OnSearchBarTextChange 
 	{
         void onTextChange(String text);
 		void onTextSubmit(String text);
+		void onGoogleVoice();
+		void onSwapDictionary();
     }
 }

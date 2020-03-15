@@ -1,6 +1,8 @@
 package com.xynotec.dictdroid.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -11,8 +13,11 @@ import com.xynotec.dictdroid.control.SearchBar;
 import com.xynotec.dictdroid.ende.BR;
 import com.xynotec.dictdroid.ende.R;
 import com.xynotec.dictdroid.ende.databinding.ActivityMainBinding;
+import com.xynotec.dictdroid.engine.LangConst;
 import com.xynotec.dictdroid.ui.main.search.SearchFragment;
+import com.xynotec.utils.CommonUtils;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
@@ -22,12 +27,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements
         SearchBar.OnSearchBarTextChange{
+
+    final int REQ_CODE_SPEECH_INPUT = 9879;
 
     final static int SEARCH_FRAGMENT = 0;
 
@@ -48,6 +57,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mMainViewModel.openDict();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,8 +119,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public MainViewModel getViewModel() {
         mMainViewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
         return mMainViewModel;
-//        mMainViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
-//        return mMainViewModel;
     }
 
     @Override
@@ -131,6 +140,52 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         tabLayout.getTabAt(SEARCH_FRAGMENT).select();
         SearchFragment searchFragment = (SearchFragment)getFragment(SEARCH_FRAGMENT);
         searchFragment.OnSubmitSearch(text);
+    }
+
+    @Override
+    public void onGoogleVoice() {
+        promptSpeechInput();
+    }
+
+    @Override
+    public void onSwapDictionary() {
+        doSwapDict();
+    }
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+
+        int sourceLang = mMainViewModel.getDataManager().getSourceLang();
+        String locale = LangConst.getStringLocale(sourceLang); //update Oct 11, 2016
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, locale);
+
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        try
+        {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        }
+        catch (Exception a)
+        {
+            CommonUtils.showErrorDlg(this, a.getMessage());
+
+            //hide not permit voice regconition when error
+            searchBar.hideVoiceRecognition();
+        }
+    }
+
+    void doSwapDict()
+    {
+        //Save history, favorite before swapping
+//        DictDbHelper.getInstance().SaveHistoryDb();
+//        DictDbHelper.getInstance().SaveFavoriteDb();
+//
+//        GlobalData.bSwapDict = !GlobalData.bSwapDict;
+//        GlobalData.setSwapDict(this);
+//        DictdroidUtil.InitDictionary(this);
+//
+//        updateAllView();
     }
 
     private Fragment getFragment(int index)
@@ -181,5 +236,20 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT:
+                if (resultCode == RESULT_OK && null != data) {
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String query = result.get(0);
+                    searchBar.setText(query, true);
+                }
+                break;
+        }
     }
 }
