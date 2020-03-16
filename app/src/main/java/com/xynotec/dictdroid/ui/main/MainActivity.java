@@ -3,6 +3,8 @@ package com.xynotec.dictdroid.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -47,18 +49,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Inject
     ViewModelProviderFactory factory;
     private MainViewModel mMainViewModel;
+    ActivityMainBinding mActivityMainBinding;
 
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.viewpager) ViewPager viewPager;
-    @BindView(R.id.searchBar) SearchBar searchBar;
+    //@BindView(R.id.searchBar) SearchBar searchBar;
 
     DrawerLayout drawer;
+
+    ImageView swapIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mMainViewModel.openDict();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,7 +75,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-        searchBar.setOnSearchBarTextChange(this);
+        swapIcon = (ImageView) findViewById(R.id.btn_swap);
+        swapIcon.setOnClickListener(swapClickListener);
+        //searchBar.setOnSearchBarTextChange(this);
+
+        mMainViewModel.openDict();
 
         setupViewPager(viewPager);
     }
@@ -123,7 +130,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public int getBindingVariable() {
-        return BR.viewModel;
+        return BR.mainVM;
     }
 
     @Override
@@ -147,11 +154,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         promptSpeechInput();
     }
 
-    @Override
-    public void onSwapDictionary() {
-        doSwapDict();
-    }
-
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
@@ -171,12 +173,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             CommonUtils.showErrorDlg(this, a.getMessage());
 
             //hide not permit voice regconition when error
-            searchBar.hideVoiceRecognition();
+            //searchBar.hideVoiceRecognition();
         }
     }
 
     void doSwapDict()
     {
+        mMainViewModel.swapDict();
         //Save history, favorite before swapping
 //        DictDbHelper.getInstance().SaveHistoryDb();
 //        DictDbHelper.getInstance().SaveFavoriteDb();
@@ -247,9 +250,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String query = result.get(0);
-                    searchBar.setText(query, true);
+                    //searchBar.setText(query, true);
                 }
                 break;
         }
     }
+
+    View.OnClickListener swapClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            doSwapDict();
+        }
+    };
 }
