@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class HistoryDao {
 
@@ -24,9 +25,10 @@ public class HistoryDao {
         realm = Realm.getInstance(mConfig);
     }
 
-    public LiveData<List<History>> getHistories()
+    public LiveData<List<History>> getHistories(int sourceLang)
     {
-        return new LiveRealmResults<>(realm.where(History.class).findAll());
+        return new LiveRealmResults<>(realm.where(History.class).equalTo("dictLang", sourceLang)
+                .sort("dateTime", Sort.DESCENDING).findAll());
     }
 
     private RealmResults<History> queryHistory(String word)
