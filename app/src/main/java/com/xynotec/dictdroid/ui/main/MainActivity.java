@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.viewpager) ViewPager viewPager;
-    //@BindView(R.id.searchBar) SearchBar searchBar;
+    @BindView(R.id.searchBar) SearchBar searchBar;
 
     DrawerLayout drawer;
 
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
         swapIcon = (ImageView) findViewById(R.id.btn_swap);
         swapIcon.setOnClickListener(swapClickListener);
-        //searchBar.setOnSearchBarTextChange(this);
+        searchBar.setOnSearchBarTextChange(this);
 
         mMainViewModel.openDict();
 
@@ -171,9 +171,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         catch (Exception a)
         {
             CommonUtils.showErrorDlg(this, a.getMessage());
-
-            //hide not permit voice regconition when error
-            //searchBar.hideVoiceRecognition();
         }
     }
 
@@ -250,7 +247,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String query = result.get(0);
-                    //searchBar.setText(query, true);
+                    searchBar.setText(query, true);
                 }
                 break;
         }
