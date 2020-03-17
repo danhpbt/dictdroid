@@ -19,12 +19,12 @@ public class FavoriteFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder
 
     private HistoryFragmentAdapterListener mListener;
 
-    private FavoriteViewModel mHFavoriteViewModel;
+    private FavoriteViewModel mFavoriteViewModel;
 
     public FavoriteFragmentAdapter(FavoriteViewModel favoriteViewModel)
     {
-        this.mHFavoriteViewModel = favoriteViewModel;
-        List<Favorite> data = this.mHFavoriteViewModel.getDataManager().getFavorites().getValue();
+        this.mFavoriteViewModel = favoriteViewModel;
+        List<Favorite> data = this.mFavoriteViewModel.getDataManager().getFavorites().getValue();
 
         if ((data != null) && (data.size() != 0))
             favorites.addAll(data);
@@ -49,9 +49,26 @@ public class FavoriteFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder
         return favorites.size();
     }
 
+    public void loadFavorites()
+    {
+        List<Favorite> data = mFavoriteViewModel.getDataManager().getFavorites().getValue();
+
+        if ((data != null) && (data.size() != 0))
+        {
+            favorites.clear();
+            favorites.addAll(data);
+            notifyDataSetChanged();
+        }
+    }
+
     public void setListener(HistoryFragmentAdapterListener listener)
     {
         mListener = listener;
+    }
+
+    public Favorite getItem(int position)
+    {
+        return favorites.get(position);
     }
 
     public interface HistoryFragmentAdapterListener

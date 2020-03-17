@@ -14,6 +14,7 @@ public interface DataManager {
     int numWordInDict();
     int getDictSource();//LINGO_ LINGVOSOFT
     int getSourceLang();
+    int getDestinationLang();
     String getDictWord(int index);
     String getMeanWord(int index);
     int onDictSearch(String word);

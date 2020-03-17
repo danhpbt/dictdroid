@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public void onTextChange(String text) {
         tabLayout.getTabAt(SEARCH_FRAGMENT).select();
         SearchFragment searchFragment = (SearchFragment)getFragment(SEARCH_FRAGMENT);
-        searchFragment.OnEditSearch(text);
+        searchFragment.onEditSearch(text);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
         tabLayout.getTabAt(SEARCH_FRAGMENT).select();
         SearchFragment searchFragment = (SearchFragment)getFragment(SEARCH_FRAGMENT);
-        searchFragment.OnSubmitSearch(text);
+        searchFragment.onSubmitSearch(text);
     }
 
     @Override
@@ -177,6 +177,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     void doSwapDict()
     {
         mMainViewModel.swapDict();
+
+        SearchFragment searchFragment = (SearchFragment)getFragment(SEARCH_FRAGMENT);
+        tabLayout.getTabAt(SEARCH_FRAGMENT).select();
+
+        searchFragment.onSwapDict();
+        searchBar.setText("", true);
+
+
         //Save history, favorite before swapping
 //        DictDbHelper.getInstance().SaveHistoryDb();
 //        DictDbHelper.getInstance().SaveFavoriteDb();

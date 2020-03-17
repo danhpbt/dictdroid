@@ -56,6 +56,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public int getDestinationLang(){
+        return mDictEngine.getDestinationLang();
+    }
+
+    @Override
     public String getDictWord(int index) {
         return mDictEngine.GetWord(index);
     }
@@ -73,13 +78,13 @@ public class AppDataManager implements DataManager {
     @Override
     public LiveData<List<History>> getHistories()
     {
-        return mDbHelper.getHistories();
+        return mDbHelper.getHistories(getSourceLang());
     }
 
     @Override
     public LiveData<List<Favorite>> getFavorites()
     {
-        return mDbHelper.getFavorites();
+        return mDbHelper.getFavorites(getSourceLang());
     }
 
     @Override

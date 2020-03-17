@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.xynotec.dictdroid.data.GlobalData;
 import com.xynotec.dictdroid.ende.R;
+import com.xynotec.dictdroid.ui.login.LoginActivity;
 import com.xynotec.dictdroid.ui.main.MainActivity;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class SplashScreen extends AppCompatActivity
                 // This method will be executed once the timer is over
                 // Start your app main activity
             	Intent i = new Intent(SplashScreen.this, MainActivity.class);
+				//Intent i = new Intent(SplashScreen.this, LoginActivity.class);
 				startActivity(i);
 
                 // close this activity

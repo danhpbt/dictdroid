@@ -11,15 +11,20 @@
 
     </data>
 
-    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:background="?android:attr/activatedBackgroundIndicator">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/activatedBackgroundIndicator"
+        android:onClick="@{() -> viewModel.onItemClick()}">
+
         <ImageView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_arrow"
             android:id="@+id/arrow"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            />
 
         <LinearLayout
             android:layout_width="fill_parent"

@@ -1,16 +1,25 @@
 package com.xynotec.dictdroid.ui.main;
 
+import android.content.Context;
+
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.xynotec.dagger.BaseViewModel;
+import com.xynotec.dictdroid.MainApplication;
 import com.xynotec.dictdroid.data.DataManager;
 import com.xynotec.dictdroid.data.GlobalData;
 import com.xynotec.dictdroid.engine.LangConst;
 
 public class MainViewModel extends BaseViewModel {
 
-    final ObservableField<String> mDictShortName = new ObservableField<>();
-    final ObservableField<String> mDictLongName = new ObservableField<>();
+    public final ObservableInt mSourceFlagResId = new ObservableInt();
+    public final ObservableInt mDestinationFlagResId = new ObservableInt();
+    public final ObservableField<String> mDictShortName = new ObservableField<>();
+    public final ObservableField<String> mDictLongName = new ObservableField<>();
+    public final ObservableField<String> mDictLongTitle = new ObservableField<>();
 
     public MainViewModel(DataManager dataManager) {
         super(dataManager);
@@ -22,11 +31,11 @@ public class MainViewModel extends BaseViewModel {
         String dictPath = bSwapDict ? GlobalData.DICT1_PATH : GlobalData.DICT2_PATH;
         getDataManager().openDict(dictPath);
 
-        String shortName = getShortDictName(dictPath, true);
-        String longName = getLongDictName(dictPath, true);
-
-        mDictShortName.set(shortName);
-        mDictLongName.set(longName);
+        mDictShortName.set(getShortDictName(dictPath, true));
+        mDictLongName.set(getLongDictName(dictPath, true));
+        mDictLongTitle.set(getLongDictName(dictPath, false));
+        mSourceFlagResId.set(flagSourceRes());
+        mDestinationFlagResId.set(flagDestinationRes());
     }
 
     public void swapDict()
@@ -78,4 +87,47 @@ public class MainViewModel extends BaseViewModel {
     {
         return mDictLongName;
     }
+
+    public ObservableField<String> getDictLongTitle()
+    {
+        return mDictLongTitle;
+    }
+
+    public ObservableField<String> getDictShortName()
+    {
+        return mDictShortName;
+    }
+
+
+
+    int flagSourceRes()
+    {
+        String symbol = LangConst.getSymbol(getDataManager().getSourceLang());
+        String flagFrom = String.format("flag_%s", symbol);
+
+        Context context = MainApplication.getContext();
+        int resId = context.getResources().getIdentifier(flagFrom, "drawable", context.getPackageName());
+        return resId;
+    }
+
+    int flagDestinationRes()
+    {
+        String symbol = LangConst.getSymbol(getDataManager().getDestinationLang());
+        String flagFrom = String.format("flag_%s", symbol);
+
+        Context context = MainApplication.getContext();
+        int resId = context.getResources().getIdentifier(flagFrom, "drawable", context.getPackageName());
+        return resId;
+    }
+
+    public ObservableInt getFlagSourceRes()
+    {
+        return mSourceFlagResId;
+    }
+
+    public ObservableInt getFlagDestinationRes()
+    {
+        return mDestinationFlagResId;
+    }
+
 }

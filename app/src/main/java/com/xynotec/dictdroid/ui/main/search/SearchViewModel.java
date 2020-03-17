@@ -62,7 +62,7 @@ public class SearchViewModel extends BaseViewModel {
         if (wordFind.compareToIgnoreCase(word) == 0)
             showMean(posWord);
     }
-    
+
     public ObservableInt getWordIndex()
     {
         return mWordIndex;

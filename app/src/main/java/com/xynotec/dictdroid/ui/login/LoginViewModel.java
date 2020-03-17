@@ -9,7 +9,7 @@ public class LoginViewModel extends BaseViewModel {
 
     public final ObservableField<String> mUserName = new ObservableField<>();
     public final ObservableField<String> mPassWord = new ObservableField<>();
-    
+
     public LoginViewModel(DataManager dataManager) {
         super(dataManager);
     }

@@ -1,59 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context="com.xynotec.dictdroid.ui.main.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <data>
+
+        <variable
+            name="mainVMAsParam"
+            type="com.xynotec.dictdroid.ui.main.MainViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent" >
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:focusableInTouchMode="true"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_toolbar_swap_dict"
-                    android:id="@+id/btn_swap"
-                    android:layout_alignParentRight="true"
-                    android:padding="12dp" />
-
-                <com.xynotec.dictdroid.control.SearchBar
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toLeftOf="@+id/btn_swap"
-                    android:id="@+id/searchBar" />
-
-            </RelativeLayout>
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="fill"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:tabIndicatorColor="@android:color/white" />
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_toolbar_swap_dict"
+                        android:id="@+id/btn_swap"
+                        android:layout_alignParentRight="true"
+                        android:padding="12dp" />
+
+                    <com.xynotec.dictdroid.control.SearchBar
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toLeftOf="@+id/btn_swap"
+                        android:id="@+id/searchBar"
+                        app:searchBarHintText="@{mainVMAsParam.dictLongName}" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="fixed"
+                app:tabGravity="fill"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:tabIndicatorColor="@android:color/white" />
 
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+        <include layout="@layout/content_main" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

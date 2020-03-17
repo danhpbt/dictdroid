@@ -26,13 +26,13 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public LiveData<List<History>> getHistories() {
-        return historyDao.getHistories();
+    public LiveData<List<History>> getHistories(int sourceLang) {
+        return historyDao.getHistories(sourceLang);
     }
 
     @Override
-    public LiveData<List<Favorite>> getFavorites() {
-        return favoriteDao.getFavorites();
+    public LiveData<List<Favorite>> getFavorites(int sourceLang) {
+        return favoriteDao.getFavorites(sourceLang);
     }
 
     @Override

@@ -90,12 +90,17 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
         showMean(index);
     }
 
-    public void OnEditSearch(String word) {
+    public void onEditSearch(String word) {
         mSearchViewModel.onEditSearch(word);
     }
 
-    public void OnSubmitSearch(String word) {
+    public void onSubmitSearch(String word) {
         mSearchViewModel.onSubmitSearch(word);
+    }
+
+    public void onSwapDict()
+    {
+        mSearchFragmentAdapter.notifyDataSetChanged();
     }
 
     void showMean(int index) {

@@ -67,9 +67,6 @@ public class SearchBar extends FrameLayout
 		_imgVoice = findViewById(R.id.btn_voice_reg);
 		_imgVoice.setVisibility(View.VISIBLE);
 		_imgVoice.setOnClickListener(onClickListener);
-
-		_imgSwap = findViewById(R.id.btn_swap);
-		_imgSwap.setOnClickListener(onClickListener);
     }
 
     public void hideVoiceRecognition()
@@ -148,8 +145,6 @@ public class SearchBar extends FrameLayout
 					voiceRegconition();
 					break;
 
-				case R.id.btn_swap:
-					break;
 			}
 		}
 	};
@@ -170,16 +165,10 @@ public class SearchBar extends FrameLayout
 		_onSearchBarTextChange.onGoogleVoice();
 	}
 
-	public void swapDictionary()
-	{
-		_onSearchBarTextChange.onSwapDictionary();
-	}
-	
-	public interface OnSearchBarTextChange 
+	public interface OnSearchBarTextChange
 	{
         void onTextChange(String text);
 		void onTextSubmit(String text);
 		void onGoogleVoice();
-		void onSwapDictionary();
     }
 }

@@ -1,6 +1,7 @@
 package com.xynotec.dictdroid.ui.main.history;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +18,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xynotec.dagger.BaseFragment;
 import com.xynotec.dictdroid.ViewModelProviderFactory;
 import com.xynotec.dictdroid.control.MeanView;
+import com.xynotec.dictdroid.data.model.History;
 import com.xynotec.dictdroid.ende.BR;
 import com.xynotec.dictdroid.ende.R;
 import com.xynotec.dictdroid.ende.databinding.FragmentHistoryBinding;
+import com.xynotec.dictdroid.ui.main.MainActivity;
+import com.xynotec.dictdroid.ui.main.MainViewModel;
+import com.xynotec.dictdroid.ui.mean.MeanActivity;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
 
 public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, HistoryViewModel> implements
         HistoryFragmentAdapter.HistoryFragmentAdapterListener {
 
     LinearLayoutManager linearLayoutManager;
+
+    @BindView(R.id.rvHistory)
     RecyclerView rvHistory;
 
     HistoryFragmentAdapter mHistoryFragmentAdapter;
@@ -64,7 +73,6 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, Histor
 
         mHistoryFragmentAdapter  = new HistoryFragmentAdapter(mHistoryViewModel);
 
-        rvHistory = view.findViewById(R.id.rvHistory);
         rvHistory.setLayoutManager(linearLayoutManager);
         rvHistory.addItemDecoration(dividerItemDecoration);
         rvHistory.setAdapter(mHistoryFragmentAdapter);
@@ -75,14 +83,30 @@ public class HistoryFragment extends BaseFragment<FragmentHistoryBinding, Histor
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    public void onResume() {
+        super.onResume();
+        mHistoryFragmentAdapter.loadHistories();
     }
 
     @Override
     public void onClickListener(int index) {
-//        showMean(index);
+        showMean(index);
+    }
+
+    void showMean(int index) {
+
+        History history = mHistoryFragmentAdapter.getItem(index);
+
+        MainActivity activity = (MainActivity)getBaseActivity();
+        MainViewModel mainViewModel = activity.getViewModel();
+        String activityTitle = mainViewModel.getDictLongName().get();
+
+        Intent intent = new Intent(activity, MeanActivity.class);
+        intent.putExtra("title", activityTitle);
+        intent.putExtra("word", history.getWord());
+        intent.putExtra("mean", history.getMean());
+        intent.putExtra("lang", history.getDictLang());
+        startActivity(intent);
     }
 
 }

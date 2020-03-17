@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class FavoriteDao {
 
@@ -24,9 +25,10 @@ public class FavoriteDao {
         realm = Realm.getInstance(mConfig);
     }
 
-    public LiveData<List<Favorite>> getFavorites()
+    public LiveData<List<Favorite>> getFavorites(int sourceLang)
     {
-        return new LiveRealmResults<>(realm.where(Favorite.class).findAllAsync());
+        return new LiveRealmResults<>(realm.where(Favorite.class).equalTo("dictLang", sourceLang)
+                .sort("dateTime", Sort.DESCENDING).findAllAsync());
     }
 
     private RealmResults<Favorite> queryFavorite(String word)
