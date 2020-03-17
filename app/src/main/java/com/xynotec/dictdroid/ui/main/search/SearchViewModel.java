@@ -82,6 +82,7 @@ public class SearchViewModel extends BaseViewModel {
 
         insertUpdateHistory(word, mean, getDataManager().getSourceLang());
 
+        //Reformat for webview
         mean = HtmlConverter.String_htmlEncode(mean, getDataManager().getDictSource());
         float zoomScale = getDataManager().getZoomScale()/100.0f;
         mean = HtmlConverter.update4ViewPort(mean, zoomScale);

@@ -5,6 +5,7 @@ import androidx.databinding.ObservableInt;
 
 import com.xynotec.dagger.BaseViewModel;
 import com.xynotec.dictdroid.data.DataManager;
+import com.xynotec.dictdroid.utils.HtmlConverter;
 
 public class MeanViewModel extends BaseViewModel {
 
@@ -23,6 +24,11 @@ public class MeanViewModel extends BaseViewModel {
 
     public void setMean(String mean)
     {
+        //Reformat for webview
+        mean = HtmlConverter.String_htmlEncode(mean, getDataManager().getDictSource());
+        float zoomScale = getDataManager().getZoomScale()/100.0f;
+        mean = HtmlConverter.update4ViewPort(mean, zoomScale);
+
         mMean.set(mean);
     }
 

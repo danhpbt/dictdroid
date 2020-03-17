@@ -18,6 +18,7 @@
         android:paddingLeft="6.0dip"
         android:paddingRight="6.0dip"
         android:paddingTop="10.0dip"
+        android:background="@drawable/rv_item_background"
         android:onClick="@{() -> viewModel.onItemClick()}">
 
         <!--TextView

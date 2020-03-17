@@ -31,7 +31,9 @@
                 android:id="@+id/meanView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                app:mvWord="@{meanVM.word}"
+                app:mvMean="@{meanVM.mean}"/>
 
             <!--com.google.android.gms.ads.AdView
                 xmlns:ads="http://schemas.android.com/apk/res-auto"

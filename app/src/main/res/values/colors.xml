@@ -11,5 +11,6 @@
     <color name="colorDivider">#BDBDBD</color>
     <color name="material_blue_500">#5677fc</color>
     <color name="colorPrimary50">#7f03a9f4</color>
+    <color name="colorPrimary1f">#1f03a9f4</color>
     <color name="dark_gray">#787878</color>
 </resources>

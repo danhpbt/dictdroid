@@ -14,7 +14,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/activatedBackgroundIndicator"
+        android:background="@drawable/rv_item_background"
         android:onClick="@{() -> viewModel.onItemClick()}" >
 
         <ImageView android:layout_width="wrap_content"
