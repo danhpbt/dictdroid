@@ -10,6 +10,8 @@ import com.xynotec.dictdroid.data.local.db.AppDbHelper;
 import com.xynotec.dictdroid.data.local.db.DbHelper;
 import com.xynotec.dictdroid.data.local.prefs.AppPreferencesHelper;
 import com.xynotec.dictdroid.data.local.prefs.PreferencesHelper;
+import com.xynotec.dictdroid.data.remote.ApiHelper;
+import com.xynotec.dictdroid.data.remote.AppApiHelper;
 import com.xynotec.dictdroid.engine.DictEngine;
 import com.xynotec.dictdroid.engine.DictEngineInternal;
 
@@ -44,6 +46,12 @@ public class AppModule {
     @Provides
     DbHelper provideDbHelper(AppDbHelper appDbHelper){
         return appDbHelper;
+    }
+
+    @Provides
+    @Singleton
+    ApiHelper provideApiHelper(AppApiHelper appApiHelper) {
+        return appApiHelper;
     }
 
     @Provides

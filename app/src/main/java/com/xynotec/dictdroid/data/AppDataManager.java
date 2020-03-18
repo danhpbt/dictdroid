@@ -8,12 +8,15 @@ import com.xynotec.dictdroid.data.local.db.DbHelper;
 import com.xynotec.dictdroid.data.local.prefs.PreferencesHelper;
 import com.xynotec.dictdroid.data.model.Favorite;
 import com.xynotec.dictdroid.data.model.History;
+import com.xynotec.dictdroid.data.remote.ApiHelper;
 import com.xynotec.dictdroid.engine.DictEngine;
 
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import io.reactivex.Single;
 
 @Singleton
 public class AppDataManager implements DataManager {
@@ -25,14 +28,19 @@ public class AppDataManager implements DataManager {
 
     private final DbHelper mDbHelper;
 
+    private final ApiHelper mApiHelper;
+
     private final PreferencesHelper mPreferencesHelper;
 
     @Inject
-    public AppDataManager(Context mContext, DictEngine dictEngine, DbHelper mDbHelper, PreferencesHelper mPreferencesHelper) {
+    public AppDataManager(Context mContext, DictEngine dictEngine,
+                          DbHelper mDbHelper, PreferencesHelper mPreferencesHelper,
+                          ApiHelper apiHelper) {
         this.mDictEngine = dictEngine;
         this.mContext = mContext;
         this.mDbHelper = mDbHelper;
         this.mPreferencesHelper = mPreferencesHelper;
+        this.mApiHelper = apiHelper;
     }
 
     @Override
@@ -245,5 +253,11 @@ public class AppDataManager implements DataManager {
     public int getPopUpSizeHeight()
     {
         return mPreferencesHelper.getPopUpSizeHeight();
+    }
+
+    //Request Api
+    @Override
+    public Single<String> doTranslateApiCall(String url) {
+        return mApiHelper.doTranslateApiCall(url);
     }
 }

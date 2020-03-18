@@ -7,6 +7,8 @@ import com.xynotec.dictdroid.data.model.History;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 public interface DataManager {
 
     //DictEngine
@@ -28,11 +30,14 @@ public interface DataManager {
     //LocalDataBase
     void insertHistory(History history);
     LiveData<List<History>> getHistories();
-
     void insertFavorite(Favorite favorite);
     void deleteFavorite(String word);
     LiveData<List<Favorite>> getFavorites();
     boolean existFavorite(String word);
+
+    //Request Api
+    Single<String> doTranslateApiCall(String url);
+
 
 
 
