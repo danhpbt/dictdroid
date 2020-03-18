@@ -12,6 +12,7 @@ public interface DbHelper {
     LiveData<List<Favorite>> getFavorites(int sourceLang);
     void insertHistory(History history);
     void insertFavorite(Favorite favorite);
+    void deleteFavorite(String word, int sourceLang);
     boolean existHistory(String history);
-    boolean existFavorite(String favorite);
+    boolean existFavorite(String favorite, int sourceLang);
 }

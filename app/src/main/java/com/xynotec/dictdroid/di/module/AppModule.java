@@ -3,6 +3,7 @@ package com.xynotec.dictdroid.di.module;
 import android.app.Application;
 import android.content.Context;
 
+import com.xynotec.common.TTS;
 import com.xynotec.dictdroid.data.AppDataManager;
 import com.xynotec.dictdroid.data.DataManager;
 import com.xynotec.dictdroid.data.local.db.AppDbHelper;
@@ -62,4 +63,5 @@ public class AppModule {
         Realm.setDefaultConfiguration(realmConfig);
         return realmConfig;
     }
+
 }

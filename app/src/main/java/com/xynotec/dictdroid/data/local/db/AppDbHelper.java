@@ -27,22 +27,27 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public LiveData<List<History>> getHistories(int sourceLang) {
-        return historyDao.getHistories(sourceLang);
+        return historyDao.get(sourceLang);
     }
 
     @Override
     public LiveData<List<Favorite>> getFavorites(int sourceLang) {
-        return favoriteDao.getFavorites(sourceLang);
+        return favoriteDao.get(sourceLang);
     }
 
     @Override
     public void insertHistory(History history) {
-        historyDao.insertHistory(history);
+        historyDao.insert(history);
     }
 
     @Override
     public void insertFavorite(Favorite favorite) {
-        favoriteDao.insertFavorite(favorite);
+        favoriteDao.insert(favorite);
+    }
+
+    @Override
+    public void deleteFavorite(String word, int sourceLang) {
+        favoriteDao.delete(word, sourceLang);
     }
 
     @Override
@@ -51,7 +56,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public boolean existFavorite(String favorite) {
-        return favoriteDao.exist(favorite);
+    public boolean existFavorite(String favorite, int sourceLang) {
+        return favoriteDao.exist(favorite, sourceLang);
     }
 }

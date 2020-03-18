@@ -28,8 +28,12 @@ public interface DataManager {
     //LocalDataBase
     void insertHistory(History history);
     LiveData<List<History>> getHistories();
+
     void insertFavorite(Favorite favorite);
+    void deleteFavorite(String word);
     LiveData<List<Favorite>> getFavorites();
+    boolean existFavorite(String word);
+
 
 
 }

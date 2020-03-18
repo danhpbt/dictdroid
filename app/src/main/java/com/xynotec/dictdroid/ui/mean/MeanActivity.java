@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.xynotec.dagger.BaseActivity;
 import com.xynotec.dictdroid.ViewModelProviderFactory;
+import com.xynotec.dictdroid.control.MeanView;
 import com.xynotec.dictdroid.ende.BR;
 import com.xynotec.dictdroid.ende.R;
 import com.xynotec.dictdroid.ende.databinding.ActivityMeanBinding;
@@ -18,10 +19,14 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class MeanActivity extends BaseActivity<ActivityMeanBinding, MeanViewModel> {
+public class MeanActivity extends BaseActivity<ActivityMeanBinding, MeanViewModel> implements
+            MeanView.OnMeanviewListener {
 
     @BindView(R.id.sub_toolbar)
     Toolbar mToolbar;
+
+    @BindView(R.id.meanView)
+    MeanView meanView;
 
     @Inject
     ViewModelProviderFactory factory;
@@ -47,6 +52,8 @@ public class MeanActivity extends BaseActivity<ActivityMeanBinding, MeanViewMode
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        meanView.setListener(this);
+
         Bundle bundle = getIntent().getExtras();
 
         String title = bundle.getString("title");
@@ -54,9 +61,7 @@ public class MeanActivity extends BaseActivity<ActivityMeanBinding, MeanViewMode
         String mean = bundle.getString("mean");
         int lang = bundle.getInt("lang");
 
-        mMeanViewModel.setWord(word);
-        mMeanViewModel.setMean(mean);
-        mMeanViewModel.setLang(lang);
+        mMeanViewModel.setMean(word, mean);
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -73,5 +78,11 @@ public class MeanActivity extends BaseActivity<ActivityMeanBinding, MeanViewMode
             });
         }
 
+
+    }
+
+    @Override
+    public void onClickFavorite() {
+        mMeanViewModel.toggleFavorite();
     }
 }

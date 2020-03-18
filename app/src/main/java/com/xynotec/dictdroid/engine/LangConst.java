@@ -341,8 +341,8 @@ public class LangConst
 		return langToStrLocale.get(Integer.valueOf(sourceLang));
 	}
 
-	public static String getLocale(String symbol)
+	public static Locale getLocale(int sourceLang)
 	{
-		return mSymbolToName.get(symbol);
+		return index2Locale.get(sourceLang);
 	}
 }

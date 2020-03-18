@@ -24,7 +24,7 @@ import com.xynotec.dictdroid.ende.databinding.FragmentSearchBinding;
 import javax.inject.Inject;
 
 public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchViewModel> implements
-        SearchFragmentAdapter.SearchFragmentAdapterListener {
+        SearchFragmentAdapter.SearchFragmentAdapterListener, MeanView.OnMeanviewListener {
 
     LinearLayoutManager linearLayoutManager;
     ViewFlipper viewFlipper;
@@ -76,6 +76,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
         mSearchFragmentAdapter.setListener(this);
 
         meanView = view.findViewById(R.id.meanView);
+        meanView.setListener(this);
 
         return view;
     }
@@ -88,6 +89,11 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
     @Override
     public void onClickListener(int index) {
         showMean(index);
+    }
+
+    @Override
+    public void onClickFavorite() {
+        mSearchViewModel.toggleFavorite();
     }
 
     public void onEditSearch(String word) {

@@ -89,6 +89,11 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
 
     @Override
     public void onClickListener(int index) {
+        showMean(index);
+    }
+
+    void showMean(int index) {
+
         Favorite favorite = mFavoriteFragmentAdapter.getItem(index);
 
         MainActivity activity = (MainActivity)getBaseActivity();

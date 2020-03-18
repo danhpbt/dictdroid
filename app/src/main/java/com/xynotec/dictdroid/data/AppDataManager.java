@@ -88,6 +88,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public boolean existFavorite(String word) {
+        return mDbHelper.existFavorite(word, getSourceLang());
+    }
+
+    @Override
+    public void deleteFavorite(String word) {
+        mDbHelper.deleteFavorite(word, getSourceLang());
+    }
+
+    @Override
     public void insertHistory(History history)
     {
         mDbHelper.insertHistory(history);
@@ -102,11 +112,6 @@ public class AppDataManager implements DataManager {
     public boolean existHistory(String history)
     {
         return mDbHelper.existHistory(history);
-    }
-
-    public boolean existFavorite(String favorite)
-    {
-        return mDbHelper.existFavorite(favorite);
     }
 
     public void setFromLangRecentIndex(int index)

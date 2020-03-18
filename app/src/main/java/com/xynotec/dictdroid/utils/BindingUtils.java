@@ -21,15 +21,17 @@ import com.xynotec.dictdroid.control.SearchBar;
 import com.xynotec.dictdroid.ende.R;
 import com.xynotec.utils.DeviceUtils;
 
+import java.util.Locale;
+
 public final class BindingUtils {
 
-    @BindingAdapter({"mvWord", "mvMean"})
-    public static void setMeanView(MeanView meanView, String word, String mean) {
+    @BindingAdapter({"mvWord", "mvMean", "mvInFavorite", "mvLocale"})
+    public static void setMeanView(MeanView meanView, String word, String mean, boolean bInFav, Locale locale) {
         //hide keyboard before display
         Activity activity = (Activity)meanView.getContext();
         DeviceUtils.hideEmulatorKeyboard(activity);
 
-        meanView.setWordMean(word, mean);
+        meanView.setWordMean(word, mean, bInFav, locale);
     }
 
     @BindingAdapter("flipperIndex")

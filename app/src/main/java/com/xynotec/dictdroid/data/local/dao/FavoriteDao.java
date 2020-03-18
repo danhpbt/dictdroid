@@ -25,24 +25,26 @@ public class FavoriteDao {
         realm = Realm.getInstance(mConfig);
     }
 
-    public LiveData<List<Favorite>> getFavorites(int sourceLang)
+    public LiveData<List<Favorite>> get(int sourceLang)
     {
         return new LiveRealmResults<>(realm.where(Favorite.class).equalTo("dictLang", sourceLang)
-                .sort("dateTime", Sort.DESCENDING).findAllAsync());
+                .sort("dateTime", Sort.DESCENDING).findAll());
     }
 
-    private RealmResults<Favorite> queryFavorite(String word)
+    private RealmResults<Favorite> query(String word, int sourceLang)
     {
-        RealmResults<Favorite> histories = realm.where(Favorite.class).equalTo("word", word).findAll();
+        RealmResults<Favorite> histories = realm.where(Favorite.class)
+                .equalTo("word", word)
+                .equalTo("dictLang", sourceLang).findAll();
         return histories;
     }
 
-    public boolean exist(String word) {
+    public boolean exist(String word, int sourceLang) {
 
-        return queryFavorite(word).size() > 0;
+        return query(word, sourceLang).size() > 0;
     }
 
-    public void insertFavorite(Favorite favorite)
+    public void insert(Favorite favorite)
     {
         realm.beginTransaction();
 
@@ -50,6 +52,28 @@ public class FavoriteDao {
         realm.insertOrUpdate(favorite);
 
         realm.commitTransaction();
+    }
+
+    public void delete(String word, int sourceLang)
+    {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Favorite> result = realm.where(Favorite.class)
+                        .equalTo("word", word)
+                        .equalTo("dictLang", sourceLang).findAll();
+                result.deleteAllFromRealm();
+            }
+        });
+
+//        //Lamda expression
+//        realm.executeTransaction(realm1 ->
+//        {
+//            RealmResults<Favorite> result = realm.where(Favorite.class)
+//                    .equalTo("word", word)
+//                    .equalTo("dictLang", sourceLang).findAll();
+//            result.deleteAllFromRealm();
+//        });
     }
 
 }

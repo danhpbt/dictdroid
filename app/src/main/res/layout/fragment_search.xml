@@ -43,8 +43,10 @@
                 android:id="@+id/meanView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:mvWord="@{searchVM.getWord()}"
-                app:mvMean="@{searchVM.getMean()}">
+                app:mvWord="@{searchVM.word}"
+                app:mvMean="@{searchVM.mean}"
+                app:mvInFavorite="@{searchVM.inFav}"
+                app:mvLocale="@{searchVM.locale}" >
             </com.xynotec.dictdroid.control.MeanView>
 
 

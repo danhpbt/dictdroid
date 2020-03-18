@@ -25,13 +25,13 @@ public class HistoryDao {
         realm = Realm.getInstance(mConfig);
     }
 
-    public LiveData<List<History>> getHistories(int sourceLang)
+    public LiveData<List<History>> get(int sourceLang)
     {
         return new LiveRealmResults<>(realm.where(History.class).equalTo("dictLang", sourceLang)
                 .sort("dateTime", Sort.DESCENDING).findAll());
     }
 
-    private RealmResults<History> queryHistory(String word)
+    private RealmResults<History> query(String word)
     {
         RealmResults<History> histories = realm.where(History.class).equalTo("word", word).findAll();
         return histories;
@@ -39,10 +39,10 @@ public class HistoryDao {
 
     public boolean exist(String word) {
 
-        return queryHistory(word).size() > 0;
+        return query(word).size() > 0;
     }
 
-    public void insertHistory(History history)
+    public void insert(History history)
     {
         realm.beginTransaction();
         realm.insertOrUpdate(history);

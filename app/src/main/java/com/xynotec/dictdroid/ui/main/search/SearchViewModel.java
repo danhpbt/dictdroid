@@ -2,15 +2,21 @@ package com.xynotec.dictdroid.ui.main.search;
 
 import android.util.Log;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
 import com.xynotec.dagger.BaseViewModel;
 import com.xynotec.dictdroid.data.DataManager;
+import com.xynotec.dictdroid.data.model.Favorite;
 import com.xynotec.dictdroid.data.model.History;
+import com.xynotec.dictdroid.engine.LangConst;
+import com.xynotec.dictdroid.ui.base.viewmodel.BaseMeanViewModel;
 import com.xynotec.dictdroid.utils.HtmlConverter;
 
-public class SearchViewModel extends BaseViewModel {
+import java.util.Locale;
+
+public class SearchViewModel extends BaseMeanViewModel {
 
     final static int SEARCH_VIEW = 0;
     final static int MEAN_VIEW = 1;
@@ -19,6 +25,8 @@ public class SearchViewModel extends BaseViewModel {
 
     final ObservableField<String> mWord = new ObservableField<>();
     final ObservableField<String> mMean = new ObservableField<>();
+    final ObservableBoolean mInFav = new ObservableBoolean();
+    final ObservableField<Locale> mLccale = new ObservableField<>();
 
     final ObservableInt mWordIndex = new ObservableInt();
     final ObservableInt mViewDisplay = new ObservableInt();
@@ -82,13 +90,7 @@ public class SearchViewModel extends BaseViewModel {
 
         insertUpdateHistory(word, mean, getDataManager().getSourceLang());
 
-        //Reformat for webview
-        mean = HtmlConverter.String_htmlEncode(mean, getDataManager().getDictSource());
-        float zoomScale = getDataManager().getZoomScale()/100.0f;
-        mean = HtmlConverter.update4ViewPort(mean, zoomScale);
-
-        mWord.set(word);
-        mMean.set(mean);
+        setMean(word, mean);
     }
 
     private void insertUpdateHistory(String word, String mean, int dictSource)
@@ -96,26 +98,5 @@ public class SearchViewModel extends BaseViewModel {
         History history = new History();
         history.setWordMean(word, mean, dictSource);
         getDataManager().insertHistory(history);
-    }
-
-//    public void setWordMean(String word, String mean)
-//    {
-//        mWord.set(word);
-//        mMean.set(mean);
-//    }
-
-    public ObservableField<String> getWord()
-    {
-        return mWord;
-    }
-
-    public ObservableField<String> getMean()
-    {
-        return mMean;
-    }
-
-    public void onSpeakerClick()
-    {
-        Log.d(TAG, "onSpeakerClick: ");
     }
 }

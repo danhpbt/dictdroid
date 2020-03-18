@@ -1,6 +1,8 @@
 package com.xynotec.dictdroid.control;
 
+import com.xynotec.common.TTS;
 import com.xynotec.dagger.BaseActivity;
+import com.xynotec.dictdroid.MainApplication;
 import com.xynotec.dictdroid.data.AppDataManager;
 import com.xynotec.dictdroid.data.local.db.AppDbHelper;
 import com.xynotec.dictdroid.data.local.prefs.AppPreferencesHelper;
@@ -28,6 +30,8 @@ import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -37,16 +41,20 @@ public class MeanView extends LinearLayout
 	//Mean View
 	private static final String MIMETYPE = "text/html";
 	private static final String ENCODING = "UTF-8";
-	
-	private Context _context;
 
 	ImageView _btnFavorite;
 	ImageView _btnSpeaker;
 	TextView _textWord;
 	WebView _webMean;
 
-//	MeanviewBinding meanviewBinding;
-//	MeanViewModel meanViewModel;
+	TTS mTTS;
+	String mWord;
+	String mMean;
+	Locale mLocale;
+
+	Context mContext;
+
+	private OnMeanviewListener mListener;
 
 	public MeanView(Context context) {
 		this(context, null);
@@ -59,32 +67,21 @@ public class MeanView extends LinearLayout
 	public MeanView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 
-		_context = context;
+		mContext = context;
 
-//        LayoutInflater inflater = (LayoutInflater) context
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        inflater.inflate(R.layout.meanview, this, true);
-
-//		meanviewBinding = MeanviewBinding.inflate(LayoutInflater.from(context), this, false);
-//		meanviewBinding.setViewModel(meanViewModel);
+		mTTS = new TTS(MainApplication.getContext());
+		mWord = mMean = "";
+		mLocale = Locale.getDefault();
 
 		LayoutInflater inflater = (LayoutInflater)
 				context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.meanview, this, true);
 
-//		meanviewBinding = MeanviewBinding.inflate(inflater);
-
-//		BaseActivity baseActivity = (BaseActivity) (_context);
-//		meanViewModel = new MeanViewModel(baseActivity.getDataManager());
-//		meanviewBinding.setViewModel(meanViewModel);
-//		meanviewBinding.executePendingBindings();
-//		meanviewBinding.setLifecycleOwner(baseActivity);
-
         _btnFavorite = findViewById(R.id.btnFavorite);
-		_btnFavorite.setOnClickListener(favoriteClick);
+		_btnFavorite.setOnClickListener(ooClickListener);
 
 		_btnSpeaker = findViewById(R.id.btnSpeaker);
-		_btnSpeaker.setOnClickListener(speakerClick);
+		_btnSpeaker.setOnClickListener(ooClickListener);
 
 		_textWord = findViewById(R.id.textWord);
 
@@ -106,125 +103,61 @@ public class MeanView extends LinearLayout
 		});
 	}
 
-
-	//	public MeanView(Context context)
-//	{
-//        this(context, null);
-//		_context = context;
-//	}
-//
-//    public MeanView(Context context, AttributeSet attrs)
-//    {
-//        super(context, attrs);
-//        _context = context;
-//
-//        LayoutInflater inflater = (LayoutInflater) context
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        inflater.inflate(R.layout.meanview, this, true);
-//
-//        _btnFavorite = findViewById(R.id.btnFavorite);
-//		_btnFavorite.setOnClickListener(favoriteClick);
-//
-//		_btnSpeaker = findViewById(R.id.btnSpeaker);
-//		_btnSpeaker.setOnClickListener(speakerClick);
-//
-//		_textWord = findViewById(R.id.textWord);
-//
-//
-//		_webMean = findViewById(R.id.wb_wordMean);
-//		if(!isInEditMode())
-//			_webMean.getSettings().setJavaScriptEnabled(true);
-//		_webMean.setWebViewClient(new WebViewClient()
-//		{
-//			@Override public boolean shouldOverrideUrlLoading(WebView view, String url)
-//			{
-//				return false;
-//			}
-//
-//			@Override
-//			public void onPageFinished(WebView view, String url) {
-//				// TODO Auto-generated method stub
-//				super.onPageFinished(view, url);
-//			}
-//		});
-//    }
-
-
-    
-    public void setWordMean(String word, String mean)
+    public void setWordMean(String word, String mean, boolean bInFavorite, Locale locale)
     {
+    	if (word == null || mean == null || locale == null)
+    		return;
+
+    	if (word.compareTo(mWord) != 0)
+    		mWord = word;
+
+    	if (mean.compareTo(mMean) != 0)
+    		mMean = mean;
+
+    	if (!locale.equals(mLocale))
+		{
+			mLocale = locale;
+			mTTS.setTTSLanguage(locale);
+		}
+
+    	if (bInFavorite)
+			_btnFavorite.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_favorite));
+		else
+			_btnFavorite.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_no_favorite));
+
+		if (mTTS.isSupportTTS())
+			_btnSpeaker.setVisibility(View.VISIBLE);
+		else
+			_btnSpeaker.setVisibility(View.GONE);
+
 		_textWord.setText(word);
 		_webMean.loadDataWithBaseURL(null, mean,
-			MIMETYPE, ENCODING, "about:blank");
+				MIMETYPE, ENCODING, "about:blank");
 
-//        meanViewModel.setWordMean(word, mean);
-//    	_word = word;
-//    	_mean = mean;
-//
-//		updateFavorite(word);
-//		updateTTSControl();
-//
-//		_textWord.setText(_word);
-//
-//		float zoomScale = appPreferencesHelper.getZoomScale()/100.0f;
-//
-//		_webMean.loadDataWithBaseURL(null, HtmlConverter.update4ViewPort(mean, zoomScale),
-//				MIMETYPE, ENCODING, "about:blank");
-    }
-
-
-
-	public void updateFavorite(String word)
-	{
-//		if(appDbHelper.existFavorite(word))
-//			_btnFavorite.setImageDrawable(ContextCompat.getDrawable(_context, R.drawable.ic_favorite));
-//		else
-//			_btnFavorite.setImageDrawable(ContextCompat.getDrawable(_context, R.drawable.ic_no_favorite));
 	}
-
-    void updateTTSControl()
-    {
-//		if(TTS.getInstance().canSpeak())
-//			_btnSpeaker.setVisibility(View.VISIBLE);
-//		else
-//			_btnSpeaker.setVisibility(View.GONE);
-    }
-    
-    private OnClickListener favoriteClick = v -> {
-		// TODO Auto-generated method stub
-//			if(appDbHelper.existFavorite(_word))
-//			{
-//				_btnFavorite.setImageDrawable(ContextCompat.getDrawable(_context, R.drawable.ic_no_favorite));
-//				//DictDbHelper.getInstance().RemoveFavorite(_word);
-//			}
-//			else
-//			{
-//				_btnFavorite.setImageDrawable(ContextCompat.getDrawable(_context, R.drawable.ic_favorite));
-//				appDbHelper.insertFavorite(new Favorite(_word, _mean));
-//				//DictDbHelper.getInstance().AddFavorite(_word, _mean);
-//			}
-	};
 	
-	private OnClickListener speakerClick = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			//Speak(_word);
+	private OnClickListener ooClickListener = v -> {
+		int id = v.getId();
+		switch (id)
+		{
+			case R.id.btnSpeaker:
+				mTTS.speak(mWord);
+				break;
+
+			case R.id.btnFavorite:
+				mListener.onClickFavorite();
+				break;
 		}
 	};
-	
-	private void Speak(String word)
-	{
-//		boolean bTTS = GlobalData.getTTSEngine(_context);
-//    	if (bTTS)
-//    		TTS.getInstance().speak(word);
 
+	public void setListener(OnMeanviewListener listener)
+	{
+		mListener = listener;
 	}
 
-	public void Speak()
+	public interface OnMeanviewListener
 	{
-		Log.d("TAG", "Speak: ");
+		void onClickFavorite();
 	}
 
 }

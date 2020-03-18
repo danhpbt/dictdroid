@@ -33,7 +33,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 app:mvWord="@{meanVM.word}"
-                app:mvMean="@{meanVM.mean}"/>
+                app:mvMean="@{meanVM.mean}"
+                app:mvInFavorite="@{meanVM.inFav}"
+                app:mvLocale="@{meanVM.locale}" />
 
             <!--com.google.android.gms.ads.AdView
                 xmlns:ads="http://schemas.android.com/apk/res-auto"
