@@ -122,21 +122,25 @@ public class AppDataManager implements DataManager {
         return mDbHelper.existHistory(history);
     }
 
+    @Override
     public void setFromLangRecentIndex(int index)
     {
         mPreferencesHelper.setFromLangRecentIndex(index);
     }
 
+    @Override
     public int getFromLangRecentIndex()
     {
         return mPreferencesHelper.getFromLangRecentIndex();
     }
 
+    @Override
     public void setToLangRecentIndex(int index)
     {
         mPreferencesHelper.setToLangRecentIndex(index);
     }
 
+    @Override
     public int getToLangRecentIndex()
     {
         return mPreferencesHelper.getToLangRecentIndex();

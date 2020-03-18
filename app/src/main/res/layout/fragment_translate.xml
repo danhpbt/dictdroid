@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="translateVM"
             type="com.xynotec.dictdroid.ui.main.translate.TranslateViewModel" />
@@ -85,7 +87,8 @@
                             android:hint="@string/text_to_translate"
                             android:imeOptions="actionDone"
                             android:paddingRight="30dp"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:text="@={translateVM.strInput}"/>
 
                         <ImageView
                             android:id="@+id/btn_clear_input"
@@ -94,7 +97,9 @@
                             android:layout_gravity="top|right"
                             app:srcCompat="@drawable/ic_translate_clear"
                             android:layout_marginRight="8dp"
-                            android:layout_marginTop="8dp" />
+                            android:layout_marginTop="8dp"
+                            android:onClick="@{() -> translateVM.clearInput()}"
+                            android:visibility="@{(translateVM.strInput.length() == 0) ? View.GONE : View.VISIBLE}" />
                     </FrameLayout>
                 </LinearLayout>
 

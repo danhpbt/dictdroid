@@ -22,6 +22,26 @@ public class TranslateViewModel extends BaseViewModel {
 
     public TranslateViewModel(DataManager dataManager) {
         super(dataManager);
+
+        fromLang.set(getDataManager().getFromLangRecentIndex());
+        toLang.set(getDataManager().getToLangRecentIndex());
+    }
+
+    public ObservableInt getFromLang()
+    {
+        return fromLang;
+    }
+
+    public ObservableInt getToLang() {
+        return toLang;
+    }
+
+    public ObservableField<String> getStrInput() {
+        return strInput;
+    }
+
+    public ObservableField<String> getStrOutput() {
+        return strOutput;
     }
 
     public void swap()

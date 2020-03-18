@@ -25,6 +25,10 @@ public interface DataManager {
     int getZoomScale();
     void setSwapDict(boolean bSwap);
     boolean getSwapDict();
+    void setFromLangRecentIndex(int index);
+    int getFromLangRecentIndex();
+    void setToLangRecentIndex(int index);
+    int getToLangRecentIndex();
 
 
     //LocalDataBase
