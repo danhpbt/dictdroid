@@ -47,7 +47,6 @@ public class MeanView extends LinearLayout
 	TextView _textWord;
 	WebView _webMean;
 
-	TTS mTTS;
 	String mWord;
 	String mMean;
 	Locale mLocale;
@@ -69,7 +68,6 @@ public class MeanView extends LinearLayout
 
 		mContext = context;
 
-		mTTS = new TTS(MainApplication.getContext());
 		mWord = mMean = "";
 		mLocale = Locale.getDefault();
 
@@ -117,7 +115,7 @@ public class MeanView extends LinearLayout
     	if (!locale.equals(mLocale))
 		{
 			mLocale = locale;
-			mTTS.setTTSLanguage(locale);
+			TTS.getInstance().setTTSLanguage(locale);
 		}
 
     	if (bInFavorite)
@@ -125,7 +123,7 @@ public class MeanView extends LinearLayout
 		else
 			_btnFavorite.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_no_favorite));
 
-		if (mTTS.isSupportTTS())
+		if (TTS.getInstance().isSupportTTS())
 			_btnSpeaker.setVisibility(View.VISIBLE);
 		else
 			_btnSpeaker.setVisibility(View.GONE);
@@ -141,7 +139,7 @@ public class MeanView extends LinearLayout
 		switch (id)
 		{
 			case R.id.btnSpeaker:
-				mTTS.speak(mWord);
+				TTS.getInstance().speak(mWord);
 				break;
 
 			case R.id.btnFavorite:

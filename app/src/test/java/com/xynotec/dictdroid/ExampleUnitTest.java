@@ -2,6 +2,9 @@ package com.xynotec.dictdroid;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -13,8 +16,57 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
-        timeConversion("07:00:59PM");
+        //timeConversion("07:00:59PM");
+        int[] apples = {2, 3, -4};
+        int[] oranges = {3, -2, -4};
+        countApplesAndOranges(7, 10, 4, 12, apples, oranges);
     }
+
+
+    static void countApplesAndOranges(int s, int t, int a, int b, int[] apples, int[] oranges) {
+        int numA = apples.length;
+        int countA = 0;
+        for(int i = 0; i < numA; i++)
+        {
+            if ((a + apples[i] >= s) && (a + apples[i] <= t))
+                countA ++;
+        }
+
+        int num0 = oranges.length;
+        int countO = 0;
+        for(int i = 0; i < num0; i++)
+        {
+            if ((b + oranges[i] >= s) && (b + oranges[i] <= t))
+                countO ++;
+        }
+
+        System.out.println(countA);
+        System.out.println(countO);
+    }
+
+
+    public static List<Integer> gradingStudents(List<Integer> grades) {
+        // Write your code here
+
+        List<Integer> result = new ArrayList<>();
+        int length = grades.size();
+        for(int i = 0; i < length; i++)
+        {
+            int val = grades.get(i).intValue();
+
+            if (val >= 38)
+            {
+                int mod5 = val % 5;
+                if (mod5 >= 3)
+                    val = (val/5)*5 + 5;
+            }
+
+            result.add(Integer.valueOf(val));
+        }
+
+        return result;
+    }
+
 
     static String timeConversion(String s) {
         /*

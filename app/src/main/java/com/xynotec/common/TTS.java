@@ -5,6 +5,8 @@ import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
+import com.xynotec.dictdroid.MainApplication;
+
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -18,7 +20,16 @@ public final class TTS {
     private boolean bSupportTTS = false;
     private Context mContext;
 
-    public TTS(Context context)
+    private static TTS instance;
+
+    public static TTS getInstance() {
+        if (instance == null) {
+            instance = new TTS(MainApplication.getContext());
+        }
+        return instance;
+    }
+
+    private TTS(Context context)
     {
         Log.d(TAG, "TTS: InitTextToSpeech");
 

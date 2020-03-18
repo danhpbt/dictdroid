@@ -54,10 +54,10 @@ public class HistoryFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public void loadHistories()
     {
         List<History> data = mHistoryViewModel.getDataManager().getHistories().getValue();
+        histories.clear();
 
         if ((data != null) && (data.size() != 0))
         {
-            histories.clear();
             histories.addAll(data);
             notifyDataSetChanged();
         }

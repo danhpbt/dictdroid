@@ -2,6 +2,7 @@ package com.xynotec.dictdroid;
 
 import android.content.Context;
 
+import com.xynotec.common.TTS;
 import com.xynotec.dictdroid.di.component.AppComponent;
 import com.xynotec.dictdroid.di.component.DaggerAppComponent;
 
@@ -26,6 +27,7 @@ public class MainApplication extends DaggerApplication {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        TTS.getInstance(); // init TTS engine
     }
 
     @Override

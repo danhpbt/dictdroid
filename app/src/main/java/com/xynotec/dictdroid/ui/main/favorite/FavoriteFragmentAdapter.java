@@ -52,10 +52,10 @@ public class FavoriteFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder
     public void loadFavorites()
     {
         List<Favorite> data = mFavoriteViewModel.getDataManager().getFavorites().getValue();
+        favorites.clear();
 
         if ((data != null) && (data.size() != 0))
         {
-            favorites.clear();
             favorites.addAll(data);
             notifyDataSetChanged();
         }
