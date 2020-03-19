@@ -134,7 +134,8 @@
                     <WebView
                         android:id="@+id/webViewTranslate"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        app:dataHtml="@{translateVM.strOutput}"/>
 
                 </LinearLayout>
             </LinearLayout>

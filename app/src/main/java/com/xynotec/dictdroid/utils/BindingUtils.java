@@ -2,6 +2,7 @@ package com.xynotec.dictdroid.utils;
 
 import android.app.Activity;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,16 @@ import com.xynotec.utils.DeviceUtils;
 import java.util.Locale;
 
 public final class BindingUtils {
+
+    private static final String MIMETYPE = "text/html";
+    private static final String ENCODING = "UTF-8";
+
+    @BindingAdapter({"dataHtml"})
+    public static void setWebView(WebView webView, String html) {
+        webView.loadDataWithBaseURL(null, html,
+                MIMETYPE, ENCODING, "about:blank");
+    }
+
 
     @BindingAdapter({"mvWord", "mvMean", "mvInFavorite", "mvLocale"})
     public static void setMeanView(MeanView meanView, String word, String mean, boolean bInFav, Locale locale) {
@@ -58,10 +69,6 @@ public final class BindingUtils {
     public static void setSearchBarHintText(SearchBar searchBar, String hint) {
         searchBar.setHintText(hint);
     }
-
-//    public static void setSearchBarHintText(SearchBar searchBar, MutableLiveData<String> hint) {
-//        searchBar.setHintText(hint.getValue());
-//    }
 
     @BindingAdapter("editTextHint")
     public static void setSearchBarHintText(EditText editText, String hint) {

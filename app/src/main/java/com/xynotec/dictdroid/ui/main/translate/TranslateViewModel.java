@@ -6,8 +6,12 @@ import androidx.databinding.ObservableInt;
 
 import com.xynotec.dagger.BaseViewModel;
 import com.xynotec.dictdroid.data.DataManager;
+import com.xynotec.dictdroid.data.GlobalData;
+import com.xynotec.dictdroid.utils.HtmlConverter;
 
 import org.json.JSONArray;
+
+import java.net.URLEncoder;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -69,21 +73,46 @@ public class TranslateViewModel extends BaseViewModel {
 
     public void translate()
     {
-        String url = "";
-        setIsLoading(true);
-        getCompositeDisposable().add(getDataManager()
-                .doTranslateApiCall(url)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> {
-                        setIsLoading(false);
-                        String wv_content = parseTranslateText(s);
-                        strOutput.set(wv_content);
-                    }
-                    , throwable -> {
-                    setIsLoading(false);
-                    //throwable.getMessage();
-                }));
+        try
+        {
+            String url = generateUrl();
+
+            setIsLoading(true);
+            getCompositeDisposable().add(getDataManager()
+                    .doTranslateApiCall(url)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(s -> {
+                                setIsLoading(false);
+                                //save language
+                                getDataManager().setFromLangRecentIndex(fromLang.get());
+                                getDataManager().setToLangRecentIndex(toLang.get());
+
+                                String wv_content = parseTranslateText(s);
+                                strOutput.set(wv_content);
+                            }
+                            , throwable -> {
+                                setIsLoading(false);
+                                String err = HtmlConverter.String_htmlEncodeGoogle(HtmlConverter.FormatError(throwable.getMessage()));
+                                strOutput.set(err);
+                            }));
+        }
+        catch (Exception ex)
+        {
+            String err = HtmlConverter.String_htmlEncodeGoogle(HtmlConverter.FormatError(ex.getMessage()));
+            strOutput.set(err);
+        }
+
+    }
+
+    private String generateUrl() throws Exception
+    {
+        String fromSymbol = GlobalData.getSymbolLanguage(fromLang.get());
+        String toSymbol = GlobalData.getSymbolLanguage(toLang.get());
+        String input = strInput.get();
+        String text = String.format("http://translate.googleapis.com/translate_a/single?client=gtx&sl=%s&tl=%s&dt=t&q=%s",
+                fromSymbol, toSymbol, URLEncoder.encode(input, "UTF-8"));
+        return text;
     }
 
     String parseTranslateText(String json) throws Exception
