@@ -41,7 +41,8 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:prompt="@string/translate_from" >
+                        android:prompt="@string/translate_from"
+                        android:selectedItemPosition="@={translateVM.fromLang}" >
                     </Spinner>
 
                     <ImageView
@@ -51,7 +52,8 @@
                         android:layout_gravity="center_vertical"
                         android:paddingLeft="5dip"
                         android:paddingRight="5dip"
-                        app:srcCompat="@drawable/ic_translate_swap">
+                        app:srcCompat="@drawable/ic_translate_swap"
+                        android:onClick="@{() -> translateVM.swap()}">
                     </ImageView>
 
                     <Spinner
@@ -59,7 +61,8 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:prompt="@string/translate_to" >
+                        android:prompt="@string/translate_to"
+                        android:selectedItemPosition="@={translateVM.toLang}" >
                     </Spinner>
                 </LinearLayout>
             </LinearLayout>
@@ -116,7 +119,8 @@
                         android:text="@string/button_translate"
                         android:textColor="#ffffffff"
                         android:background="@color/colorPrimary"
-                        android:minHeight="30dp">
+                        android:minHeight="30dp"
+                        android:onClick="@{() -> translateVM.translate()}" >
 
                     </Button>
                 </LinearLayout>
