@@ -36,11 +36,16 @@ public class AppDataManager implements DataManager {
     public AppDataManager(Context mContext, DictEngine dictEngine,
                           DbHelper mDbHelper, PreferencesHelper mPreferencesHelper,
                           ApiHelper apiHelper) {
-        this.mDictEngine = dictEngine;
         this.mContext = mContext;
+        this.mDictEngine = dictEngine;
         this.mDbHelper = mDbHelper;
         this.mPreferencesHelper = mPreferencesHelper;
         this.mApiHelper = apiHelper;
+    }
+
+    @Override
+    public Context getContext() {
+        return mContext;
     }
 
     @Override
@@ -193,6 +198,7 @@ public class AppDataManager implements DataManager {
         return mPreferencesHelper.getTTSEngine();
     }
 
+    @Override
     public void setZoomScale(int scale)
     {
         mPreferencesHelper.setZoomScale(scale);
@@ -204,21 +210,24 @@ public class AppDataManager implements DataManager {
         return mPreferencesHelper.getZoomScale();
     }
 
-    public void setQSZoomScale(int scale)
+    @Override
+    public void setQZoomScale(int scale)
     {
         mPreferencesHelper.setQSZoomScale(scale);
     }
 
-    public int getQSZoomScale()
-    {
+    @Override
+    public int getQZoomScale() {
         return mPreferencesHelper.getQSZoomScale();
     }
 
+    @Override
     public void setAutoLookup(boolean bAutoLookup)
     {
         mPreferencesHelper.setAutoLookup(bAutoLookup);
     }
 
+    @Override
     public boolean getAutoLookup()
     {
         return mPreferencesHelper.getAutoLookup();

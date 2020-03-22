@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.xynotec.dictdroid.data.DataManager;
+import com.xynotec.dictdroid.ui.about.AboutViewModel;
 import com.xynotec.dictdroid.ui.login.LoginViewModel;
 import com.xynotec.dictdroid.ui.main.MainViewModel;
 import com.xynotec.dictdroid.ui.main.favorite.FavoriteViewModel;
@@ -12,6 +13,7 @@ import com.xynotec.dictdroid.ui.main.history.HistoryViewModel;
 import com.xynotec.dictdroid.ui.main.search.SearchViewModel;
 import com.xynotec.dictdroid.ui.main.translate.TranslateViewModel;
 import com.xynotec.dictdroid.ui.mean.MeanViewModel;
+import com.xynotec.dictdroid.ui.setting.SettingViewModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -49,6 +51,12 @@ public class ViewModelProviderFactory implements ViewModelProvider.Factory {
         }
         else if (modelClass.isAssignableFrom(TranslateViewModel.class)) {
             return (T) new TranslateViewModel(mDataManager);
+        }
+        else if (modelClass.isAssignableFrom(SettingViewModel.class)) {
+            return (T) new SettingViewModel(mDataManager);
+        }
+        else if (modelClass.isAssignableFrom(AboutViewModel.class)) {
+            return (T) new AboutViewModel(mDataManager);
         }
 
         //noinspection unchecked

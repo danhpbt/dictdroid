@@ -16,7 +16,9 @@ import com.xynotec.dictdroid.ende.BR;
 import com.xynotec.dictdroid.ende.R;
 import com.xynotec.dictdroid.ende.databinding.ActivityMainBinding;
 import com.xynotec.dictdroid.engine.LangConst;
+import com.xynotec.dictdroid.ui.about.AboutActivity;
 import com.xynotec.dictdroid.ui.main.search.SearchFragment;
+import com.xynotec.dictdroid.ui.setting.SettingActivity;
 import com.xynotec.utils.CommonUtils;
 
 import androidx.annotation.Nullable;
@@ -105,10 +107,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     //doRemoveAds();
 
                 } else if (id == R.id.nav_setting) {
-                    //doSettings();
+                    doSettings();
 
                 } else if (id == R.id.nav_about) {
-                    //doAbout();
+                    doAbout();
 
                 }
 
@@ -183,17 +185,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
         searchFragment.onSwapDict();
         searchBar.setText("", true);
+    }
 
+    private void doSettings() {
+        Intent intent = new Intent(this, SettingActivity.class);
+        startActivity(intent);
+    }
 
-        //Save history, favorite before swapping
-//        DictDbHelper.getInstance().SaveHistoryDb();
-//        DictDbHelper.getInstance().SaveFavoriteDb();
-//
-//        GlobalData.bSwapDict = !GlobalData.bSwapDict;
-//        GlobalData.setSwapDict(this);
-//        DictdroidUtil.InitDictionary(this);
-//
-//        updateAllView();
+    void doAbout()
+    {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 
     private Fragment getFragment(int index)

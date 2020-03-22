@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.xynotec.dictdroid.ui.about.AboutActivity">
+
+    <data>
+
+        <variable
+            name="aboutVM"
+            type="com.xynotec.dictdroid.ui.about.AboutViewModel" />
+
+    </data>
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            layout="@layout/app_bar_sub">
+        </include>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true">
+
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.xynotec.gui.SquareLayout
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+
+                        android:id="@+id/view"
+                        android:layout_gravity="center_horizontal">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/imagelogo"
+                            app:srcCompat="@drawable/xynotec_logo"/>
+
+                    </com.xynotec.gui.SquareLayout>
+
+                    <TextView
+                        android:id="@+id/dictName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/str_dict_name"
+                        android:textColor="@android:color/black"
+                        android:textSize="20.0dip"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/str_dictionary"
+                        android:textColor="@android:color/black"
+                        android:textSize="20.0dip"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtVersion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="16.0dip"
+                        android:textStyle="bold"
+                        android:text="@{aboutVM.version}">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/copyRight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/about_copyright"
+                        android:textColor="@android:color/black"
+                        android:textSize="16.0dip"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/infoSupport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="20.0dip"
+                        android:text="@string/about_infoandsupport"
+                        android:textColor="@android:color/black"
+                        android:textSize="16.0dip"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="email"
+                        android:gravity="center"
+                        android:text="@string/about_email"
+                        android:textColor="@android:color/black"
+                        android:textSize="16.0dip"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/webSite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        android:gravity="center"
+                        android:text="@string/about_website"
+                        android:textColor="@android:color/black"
+                        android:textSize="16.0dip"
+                        android:textStyle="bold" />
+
+                    <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"></LinearLayout>
+
+                </LinearLayout>
+
+
+            </ScrollView>
+
+            <!--com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/banner_ad_unit_id">
+            </com.google.android.gms.ads.AdView-->
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>

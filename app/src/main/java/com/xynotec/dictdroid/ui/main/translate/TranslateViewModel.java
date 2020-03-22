@@ -95,7 +95,7 @@ public class TranslateViewModel extends BaseViewModel {
                             }
                             , throwable -> {
                                 setIsLoading(false);
-                                String err = HtmlConverter.String_htmlEncodeGoogle(HtmlConverter.FormatError(throwable.getMessage()));
+                                String err = HtmlConverter.String_htmlEncodeGoogle(HtmlConverter.FormatError(throwable.getLocalizedMessage()));
                                 strOutput.set(err);
                             }));
         }
