@@ -1,6 +1,8 @@
 package com.xynotec.dictdroid.ui.main.translate;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +29,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class TranslateFragment extends BaseFragment<FragmentTranslateBinding, TranslateViewModel> {
+public class TranslateFragment extends BaseFragment<FragmentTranslateBinding, TranslateViewModel>
+        implements TranslateViewModel.TranslateViewModelListener {
 
     @BindView(R.id.spinnerFromLang)
     Spinner spinnerFromLang;
@@ -35,21 +38,14 @@ public class TranslateFragment extends BaseFragment<FragmentTranslateBinding, Tr
     @BindView(R.id.spinnerToLang)
     Spinner spinnerToLang;
 
-    @BindView(R.id.buttonSwap)
-    ImageView imageViewSwap;
-
     @BindView(R.id.btn_clear_input)
     ImageView imageViewClear;
-
-    @BindView(R.id.buttonTranslate)
-    Button buttonTranslate;
-
-    @BindView(R.id.webViewTranslate)
-    WebView wvTranslate;
 
     @Inject
     ViewModelProviderFactory factory;
     TranslateViewModel mTranslateViewModel;
+
+    ProgressDialog mProgressDialog;
 
     @Override
     protected int getLayoutRes() {
@@ -73,6 +69,13 @@ public class TranslateFragment extends BaseFragment<FragmentTranslateBinding, Tr
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         Activity context = getActivity();
+
+        mProgressDialog = new ProgressDialog(context);
+        mProgressDialog.setMessage("Translating...");
+        mProgressDialog.setCancelable(false);
+
+        mTranslateViewModel.setListener(this);
+
         ArrayAdapter<CharSequence> language_adapter =
                 (ArrayAdapter<CharSequence>) new ArrayAdapter(context, R.layout.spinner_item,
                         com.xynotec.dictdroid.data.GlobalData.mLanguages);
@@ -82,25 +85,19 @@ public class TranslateFragment extends BaseFragment<FragmentTranslateBinding, Tr
         spinnerFromLang.setAdapter(language_adapter);
         spinnerToLang.setAdapter(language_adapter);
 
-        imageViewSwap.setOnClickListener(onClickListener);
-        imageViewClear.setOnClickListener(onClickListener);
-        buttonTranslate.setOnClickListener(onClickListener);
-
         return view;
     }
 
-    View.OnClickListener onClickListener = v -> {
-        int id = v.getId();
-        switch (id)
+    @Override
+    public void onShowProgressDlg(boolean bShow) {
+        if (bShow)
+            mProgressDialog.show();
+        else
         {
-            case R.id.buttonSwap:
-                break;
-
-            case R.id.btn_clear_input:
-                break;
-
-            case R.id.buttonTranslate:
-                break;
+            if (mProgressDialog != null && mProgressDialog.isShowing())
+                mProgressDialog.dismiss();
         }
-    };
+    }
+
+
 }

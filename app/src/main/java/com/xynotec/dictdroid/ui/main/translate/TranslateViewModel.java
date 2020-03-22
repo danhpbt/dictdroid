@@ -22,7 +22,8 @@ public class TranslateViewModel extends BaseViewModel {
     final ObservableInt toLang = new ObservableInt();
     final ObservableField<String> strInput = new ObservableField<>();
     final ObservableField<String> strOutput = new ObservableField<>();
-    final ObservableBoolean isLoading = new ObservableBoolean();
+
+    TranslateViewModelListener mListener;
 
     public TranslateViewModel(DataManager dataManager) {
         super(dataManager);
@@ -62,13 +63,14 @@ public class TranslateViewModel extends BaseViewModel {
         strInput.set("");
     }
 
-
-    public ObservableBoolean getIsLoading() {
-        return isLoading;
+    public void setListener(TranslateViewModelListener listener)
+    {
+        mListener = listener;
     }
 
     public void setIsLoading(boolean isLoading) {
-        this.isLoading.set(isLoading);
+        if (mListener != null)
+            this.mListener.onShowProgressDlg(isLoading);
     }
 
     public void translate()
@@ -136,5 +138,9 @@ public class TranslateViewModel extends BaseViewModel {
         sb.append(endFmt);
 
         return sb.toString();
+    }
+
+    interface TranslateViewModelListener{
+        void onShowProgressDlg(boolean bShow);
     }
 }
