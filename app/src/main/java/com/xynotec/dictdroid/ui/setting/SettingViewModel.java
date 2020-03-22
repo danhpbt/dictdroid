@@ -1,5 +1,7 @@
 package com.xynotec.dictdroid.ui.setting;
 
+import android.widget.SeekBar;
+
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
@@ -10,7 +12,7 @@ import com.xynotec.dictdroid.data.DataManager;
 public class SettingViewModel extends BaseViewModel {
 
     final ObservableField<String> strZoomScale = new ObservableField<>();
-    final ObservableField<String> strQZoomScale = new ObservableField<>();
+    final ObservableField<String> strZoomQScale = new ObservableField<>();
     final ObservableInt zoomScale = new ObservableInt();
     final ObservableInt zoomQScale = new ObservableInt();
     final ObservableBoolean bAutoLookup = new ObservableBoolean();
@@ -20,33 +22,57 @@ public class SettingViewModel extends BaseViewModel {
 
         zoomScale.set(getDataManager().getZoomScale());
         zoomQScale.set(getDataManager().getQZoomScale());
+        strZoomScale.set(String.format("Text size: %d%%", zoomScale.get()));
+        strZoomQScale.set(String.format("Text size: %d%%", zoomQScale.get()));
         bAutoLookup.set(getDataManager().getAutoLookup());
     }
 
     public ObservableField<String> getStringZoomScale()
     {
-        int zoom = zoomScale.get();
-        String str = String.format("Text size: %d%%", zoom);
-        strZoomScale.set(str);
         return strZoomScale;
     }
 
-    public ObservableField<String> getStringQZoomScale()
+    public ObservableField<String> getStringZoomQScale()
     {
-        int zoomQ = zoomQScale.get();
-        String str = String.format("Text size: %d%%", zoomQ);
-        strQZoomScale.set(str);
-        return strQZoomScale;
+        return strZoomQScale;
     }
 
-    public ObservableInt getZoomScale()
+    public int getZoomScale()
     {
-        return zoomScale;
+        return zoomScale.get() - 100;
     }
 
-    public ObservableInt getQZoomScale()
+    public int getZoomQScale()
     {
-        return zoomQScale;
+        return zoomQScale.get() - 100;
+    }
+
+    public void onZoomChanged(SeekBar seekBar, int progress, boolean fromUser)
+    {
+        if (fromUser)
+        {
+            int val = progress + 100;
+            zoomScale.set(val);
+
+            String str = String.format("Text size: %d%%", val);
+            strZoomScale.set(str);
+
+            getDataManager().setZoomScale(val);
+        }
+    }
+
+    public void onZoomQChanged(SeekBar seekBar, int progress, boolean fromUser)
+    {
+        if (fromUser)
+        {
+            int val = progress + 100;
+            zoomQScale.set(val);
+
+            String str = String.format("Text size: %d%%", val);
+            strZoomQScale.set(str);
+
+            getDataManager().setQZoomScale(val);
+        }
     }
 
     public ObservableBoolean getAutoLookup()

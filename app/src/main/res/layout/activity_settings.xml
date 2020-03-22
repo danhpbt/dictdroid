@@ -106,7 +106,7 @@
                                 android:paddingBottom="5dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
-                                android:text="@={settingVM.stringZoomScale}"
+                                android:text="@{settingVM.stringZoomScale}"
                                 android:textAppearance="@style/settings_main_text" />
 
                         </TableRow>
@@ -143,9 +143,9 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:min="100"
-                                    android:max="200"
-                                    android:progress="@={settingVM.ZoomScale}"
+                                    android:max="100"
+                                    android:progress="@{settingVM.zoomScale}"
+                                    android:onProgressChanged="@{settingVM::onZoomChanged}"
                                     android:layout_toRightOf="@+id/imgFontSmall"
                                     android:layout_toLeftOf="@+id/imgFontLarge" />
 
@@ -180,7 +180,7 @@
                                 android:paddingBottom="5dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="5dp"
-                                android:text="@={settingVM.stringQZoomScale}"
+                                android:text="@{settingVM.stringZoomQScale}"
                                 android:textAppearance="@style/settings_main_text" />
 
                         </TableRow>
@@ -217,9 +217,9 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:min="100"
-                                    android:max="200"
-                                    android:progress="@={settingVM.QZoomScale}"
+                                    android:max="100"
+                                    android:progress="@{settingVM.zoomQScale}"
+                                    android:onProgressChanged="@{settingVM::onZoomQChanged}"
                                     android:layout_toRightOf="@+id/img_qs_FontSmall"
                                     android:layout_toLeftOf="@+id/img_qs_FontLarge" />
 
