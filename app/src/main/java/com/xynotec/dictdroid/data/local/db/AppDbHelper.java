@@ -46,6 +46,11 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public void deleteHistory(String word, int sourceLang) {
+        historyDao.delete(word, sourceLang);
+    }
+
+    @Override
     public void deleteFavorite(String word, int sourceLang) {
         favoriteDao.delete(word, sourceLang);
     }

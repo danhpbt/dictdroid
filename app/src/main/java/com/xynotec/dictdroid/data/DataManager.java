@@ -33,7 +33,9 @@ public interface DataManager {
 
     //LocalDataBase
     void insertHistory(History history);
+    void deleteHistory(String word);
     LiveData<List<History>> getHistories();
+
     void insertFavorite(Favorite favorite);
     void deleteFavorite(String word);
     LiveData<List<Favorite>> getFavorites();

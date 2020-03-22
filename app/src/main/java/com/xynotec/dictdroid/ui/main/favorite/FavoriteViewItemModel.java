@@ -1,6 +1,9 @@
 package com.xynotec.dictdroid.ui.main.favorite;
 
 import android.content.Context;
+import android.view.View;
+
+import androidx.databinding.ObservableBoolean;
 
 import com.xynotec.dictdroid.MainApplication;
 import com.xynotec.dictdroid.engine.LangConst;
@@ -13,6 +16,7 @@ public class FavoriteViewItemModel {
     final String mWord;
     final int mDictLang;
     final Date mDateTime;
+    ObservableBoolean mSelected = new ObservableBoolean(false);
 
     final FavoriteViewItemModelListener mFavoriteViewItemModelListener;
 
@@ -46,12 +50,29 @@ public class FavoriteViewItemModel {
         return resId;
     }
 
+    public void setSelected(boolean bSelected)
+    {
+        this.mSelected.set(bSelected);
+    }
+
+    public ObservableBoolean getSelected()
+    {
+        return this.mSelected;
+    }
+
     public void onItemClick()
     {
         mFavoriteViewItemModelListener.onItemClick(mIndex);
     }
 
+    public boolean onItemLongClick(View view)
+    {
+        mFavoriteViewItemModelListener.onItemLongClick(mIndex);
+        return true;
+    }
+
     interface FavoriteViewItemModelListener{
         void onItemClick(int index);
+        void onItemLongClick(int index);
     }
 }

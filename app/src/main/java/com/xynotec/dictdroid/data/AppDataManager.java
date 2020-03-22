@@ -106,6 +106,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public void deleteHistory(String word) {
+        mDbHelper.deleteHistory(word, getSourceLang());
+    }
+
+    @Override
     public void insertHistory(History history)
     {
         mDbHelper.insertHistory(history);

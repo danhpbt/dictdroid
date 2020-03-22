@@ -1,8 +1,10 @@
 package com.xynotec.dictdroid.ui.main.history;
 
 import android.content.Context;
+import android.view.View;
 
 import androidx.core.content.ContextCompat;
+import androidx.databinding.ObservableBoolean;
 
 import com.xynotec.dictdroid.MainApplication;
 import com.xynotec.dictdroid.engine.LangConst;
@@ -16,6 +18,7 @@ public class HistoryViewItemModel {
     final String mWord;
     final int mDictLang;
     final Date mDateTime;
+    ObservableBoolean mSelected = new ObservableBoolean(false);
 
     final HistoryViewItemModelListener mHistoryViewItemModelListener;
 
@@ -49,12 +52,29 @@ public class HistoryViewItemModel {
         return resId;
     }
 
+    public void setSelected(boolean bSelected)
+    {
+        this.mSelected.set(bSelected);
+    }
+
+    public ObservableBoolean getSelected()
+    {
+        return this.mSelected;
+    }
+
     public void onItemClick()
     {
         mHistoryViewItemModelListener.onItemClick(mIndex);
     }
 
+    public boolean onItemLongClick(View view)
+    {
+        mHistoryViewItemModelListener.onItemLongClick(mIndex);
+        return true;
+    }
+
     interface HistoryViewItemModelListener{
         void onItemClick(int index);
+        void onItemLongClick(int index);
     }
 }

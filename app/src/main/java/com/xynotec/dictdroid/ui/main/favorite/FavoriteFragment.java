@@ -1,14 +1,19 @@
 package com.xynotec.dictdroid.ui.main.favorite;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ActionMode;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +34,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, FavoriteViewModel> implements
-        FavoriteFragmentAdapter.HistoryFragmentAdapterListener {
+        FavoriteFragmentAdapter.FavoriteFragmentAdapterListener, ActionMode.Callback {
 
     LinearLayoutManager linearLayoutManager;
 
@@ -41,6 +46,8 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
     @Inject
     ViewModelProviderFactory factory;
     FavoriteViewModel mFavoriteViewModel;
+
+    private ActionMode actionMode;
 
     @Override
     protected int getLayoutRes() {
@@ -92,6 +99,11 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         showMean(index);
     }
 
+    @Override
+    public void onItemLongClick(int index) {
+        enableActionMode(index);
+    }
+
     void showMean(int index) {
 
         Favorite favorite = mFavoriteFragmentAdapter.getItem(index);
@@ -106,5 +118,107 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Favo
         intent.putExtra("mean", favorite.getMean());
         intent.putExtra("lang", favorite.getDictLang());
         startActivity(intent);
+    }
+
+    void doSelectAll(ActionMode mode)
+    {
+        mFavoriteFragmentAdapter.selectAll();
+
+        int count = mFavoriteFragmentAdapter.getSelectedItemCount();
+
+        if (count == 0)
+            actionMode.finish();
+        else
+            actionMode.setTitle(count + "  selected");
+    }
+
+    void doDelete(final ActionMode mode)
+    {
+        AlertDialog clearAlertDlg = new AlertDialog.Builder(getActivity(), R.style.AlertDialogInfoStyle)
+                .setIcon(R.drawable.ic_alert_info)
+                .setTitle(R.string.delete_favorite)
+                .setMessage(R.string.alert_dialog_delete_confirm)
+                .setPositiveButton(R.string.alert_dialog_yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                doPositiveClick(mode);
+                            }
+                        }
+                )
+                .setNegativeButton(R.string.alert_dialog_no,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                doNegativeClick();
+                            }
+                        }
+                )
+                .setCancelable(false)
+                .create();
+
+        clearAlertDlg.show();
+    }
+
+    public void doPositiveClick(ActionMode mode) {
+        deleteSelected(mode);
+    }
+
+    public void doNegativeClick() {
+        // Do stuff here.
+    }
+
+    private void deleteSelected(ActionMode mode)
+    {
+        mFavoriteFragmentAdapter.deleteSelectedItem();
+
+        // Close CAB
+        mode.finish();
+    }
+
+    private void enableActionMode(int position) {
+        MainActivity activity = (MainActivity) getBaseActivity();
+        if (actionMode == null)
+            actionMode = activity.startSupportActionMode(this);
+        toggleSelection(position);
+    }
+
+    private void toggleSelection(int position) {
+        mFavoriteFragmentAdapter.toggleSelection(position);
+        int count = mFavoriteFragmentAdapter.getSelectedItemCount();
+
+        if (count == 0)
+            actionMode.finish();
+        else
+            actionMode.setTitle(count + "  selected");
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        getActivity().getMenuInflater().inflate(R.menu.menu_del_item,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        switch  (item.getItemId()) {
+            case R.id.selectAll:
+                doSelectAll(mode);
+                return true;
+
+            case R.id.delete:
+                doDelete(mode);
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        mFavoriteFragmentAdapter.clearSelections();
+        actionMode = null;
     }
 }

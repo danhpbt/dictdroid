@@ -1,5 +1,7 @@
 package com.xynotec.dictdroid.ui.main.history;
 
+import android.graphics.Color;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -18,6 +20,7 @@ import java.util.List;
 public class HistoryFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     List<History> histories = new ArrayList<>();
+    private SparseBooleanArray mSelectedItemsIds;
 
     private HistoryFragmentAdapterListener mListener;
 
@@ -26,6 +29,8 @@ public class HistoryFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public HistoryFragmentAdapter(HistoryViewModel historyViewModel)
     {
         this.mHistoryViewModel = historyViewModel;
+        mSelectedItemsIds = new SparseBooleanArray();
+
         List<History> data = this.mHistoryViewModel.getDataManager().getHistories().getValue();
 
         if ((data != null) && (data.size() != 0))
@@ -44,6 +49,8 @@ public class HistoryFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         holder.onBind(position);
+        HistoryViewHolder historyViewHolder = (HistoryViewHolder)holder;
+        historyViewHolder.setSelected(mSelectedItemsIds.get(position));
     }
 
     @Override
@@ -73,9 +80,60 @@ public class HistoryFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder>
         return histories.get(position);
     }
 
+
+    //////////////////Selection
+    public void clearSelections() {
+        mSelectedItemsIds.clear();
+        notifyDataSetChanged();
+    }
+
+    public void selectAll()
+    {
+        mSelectedItemsIds.clear();
+        for(int i = 0; i < histories.size(); i++)
+            mSelectedItemsIds.put(i, true);
+
+        notifyDataSetChanged();
+    }
+
+    public void deleteSelectedItem()
+    {
+        for (int i =  (histories.size() - 1); i >= 0; i--)
+        {
+            boolean bSelected = mSelectedItemsIds.get(i);
+            if  (bSelected) {
+                History  history = histories.get(i);
+                histories.remove(i);
+                mHistoryViewModel.getDataManager().deleteHistory(history.getWord());
+            }
+        }
+
+        mSelectedItemsIds.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount()
+    {
+        return mSelectedItemsIds.size();
+    }
+    public void  toggleSelection(int position) {
+        selectView(position, !mSelectedItemsIds.get(position));
+    }
+
+    // Item checked on selection
+    public void selectView(int position, boolean value) {
+        if (value)
+            mSelectedItemsIds.put(position,  value);
+        else
+            mSelectedItemsIds.delete(position);
+        notifyDataSetChanged();
+    }
+
+    //////////////////////////////////////////////////
     public interface HistoryFragmentAdapterListener
     {
         void onClickListener(int index);
+        void onItemLongClick(int index);
     }
 
     class HistoryViewHolder extends BaseViewHolder
@@ -87,6 +145,11 @@ public class HistoryFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder>
         public HistoryViewHolder(HistoryFragmentRvItemBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
+        }
+
+        public void setSelected(boolean bSelect)
+        {
+            mHistoryViewItemModel.setSelected(bSelect);
         }
 
         @Override
@@ -106,6 +169,11 @@ public class HistoryFragmentAdapter extends RecyclerView.Adapter<BaseViewHolder>
         @Override
         public void onItemClick(int index) {
             mListener.onClickListener(index);
+        }
+
+        @Override
+        public void onItemLongClick(int index) {
+            mListener.onItemLongClick(index);
         }
     }
 }

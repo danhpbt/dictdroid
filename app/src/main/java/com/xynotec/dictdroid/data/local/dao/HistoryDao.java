@@ -49,4 +49,26 @@ public class HistoryDao {
         realm.commitTransaction();
     }
 
+    public void delete(String word, int sourceLang)
+    {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<History> result = realm.where(History.class)
+                        .equalTo("word", word)
+                        .equalTo("dictLang", sourceLang).findAll();
+                result.deleteAllFromRealm();
+            }
+        });
+
+//        //Lamda expression
+//        realm.executeTransaction(realm1 ->
+//        {
+//            RealmResults<History> result = realm.where(History.class)
+//                    .equalTo("word", word)
+//                    .equalTo("dictLang", sourceLang).findAll();
+//            result.deleteAllFromRealm();
+//        });
+    }
+
 }

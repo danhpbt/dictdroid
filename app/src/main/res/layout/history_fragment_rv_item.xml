@@ -14,8 +14,10 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rv_item_background"
-        android:onClick="@{() -> viewModel.onItemClick()}">
+        android:background="@{viewModel.selected ? @drawable/rv_item_background_select : @drawable/rv_item_background}"
+        android:onClick="@{() -> viewModel.onItemClick()}"
+        android:onLongClick="@{viewModel::onItemLongClick}" >
+
 
         <ImageView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
