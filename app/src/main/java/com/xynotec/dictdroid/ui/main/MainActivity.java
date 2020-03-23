@@ -1,9 +1,15 @@
 package com.xynotec.dictdroid.ui.main;
 
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.speech.RecognizerIntent;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -24,6 +30,7 @@ import com.xynotec.utils.CommonUtils;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -42,6 +49,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         SearchBar.OnSearchBarTextChange{
 
     final int REQ_CODE_SPEECH_INPUT = 9879;
+    final int REQ_CODE_ACTION_MANAGE_OVERLAY_PERMISSION = 9001;
 
     final static int SEARCH_FRAGMENT = 0;
 
@@ -92,16 +100,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 int id = menuItem.getItemId();
 
                 if (id == R.id.nav_quick_search) {
-                    //doQuickSearch();
+                    doQuickSearch();
 
                 } else if (id == R.id.nav_rate) {
-                    //doRateApp();
+                    doRateApp();
 
                 } else if (id == R.id.nav_share) {
-                    //doShareApp();
+                    doShareApp();
 
                 } else if (id == R.id.nav_more) {
-                    //doMoreApps();
+                    doMoreApps();
 
                 } else if (id == R.id.nav_remove_ads) {
                     //doRemoveAds();
@@ -176,6 +184,21 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         }
     }
 
+    public void executeQuickSearch()
+    {
+        CommonUtils.showInfoDlg(this, "Not implement yet");
+
+//        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.canDrawOverlays(this)) ||
+//                (Build.VERSION.SDK_INT < Build.VERSION_CODES.M))
+//        {
+//            Intent intent = new Intent(this, QuickSearchService.class);
+//            intent.putExtra(QuickSearchService.QUICK_SEARCH_STATE, QuickSearchService.QS_ACTION_QUICK_SEARCH);
+//            startService(intent);
+//
+//            showQuickSearchUserGuide();
+//        }
+    }
+
     void doSwapDict()
     {
         mMainViewModel.swapDict();
@@ -185,6 +208,68 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
         searchFragment.onSwapDict();
         searchBar.setText("", true);
+    }
+
+    private void doQuickSearch()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            AlertDialog alertDlg = new AlertDialog.Builder(this, R.style.AlertDialogInfoStyle)
+                    .setIcon(R.drawable.ic_alert_info)
+                    .setTitle(R.string.app_name)
+                    .setMessage(R.string.permission_quick_search_draw_over_permissions)
+                    .setPositiveButton(R.string.str_ok,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    CommonUtils.gotoDrawOverSetting(MainActivity.this, REQ_CODE_ACTION_MANAGE_OVERLAY_PERMISSION);
+                                }
+                            }
+                    )
+                    .setNegativeButton(R.string.str_cancel, null)
+                    .setCancelable(false)
+                    .create();
+
+            alertDlg.show();
+            return;
+        }
+
+        executeQuickSearch();
+
+    }
+
+    private void doRateApp()
+    {
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try
+        {
+            startActivity(myAppLinkToMarket);
+        }
+        catch (ActivityNotFoundException e)
+        {
+            CommonUtils.showErrorDlg(this, e.getLocalizedMessage());
+        }
+
+    }
+
+    private void doShareApp()
+    {
+        String subject = "Share Dictdroid";
+        String body = "https://play.google.com/store/apps/details?id=" + getPackageName();
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, body);
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_app_title)));
+
+    }
+
+    private void doMoreApps()
+    {
+        // TODO Auto-generated method stub
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://search?q=pub:Xynotec"));
+        startActivity(intent);
     }
 
     private void doSettings() {
@@ -259,6 +344,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     String query = result.get(0);
                     searchBar.setText(query, true);
                 }
+                break;
+
+            case REQ_CODE_ACTION_MANAGE_OVERLAY_PERMISSION:
+                executeQuickSearch();
                 break;
         }
     }
