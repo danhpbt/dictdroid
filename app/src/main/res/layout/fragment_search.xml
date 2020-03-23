@@ -46,7 +46,8 @@
                 app:mvWord="@{searchVM.word}"
                 app:mvMean="@{searchVM.mean}"
                 app:mvInFavorite="@{searchVM.inFav}"
-                app:mvLocale="@{searchVM.locale}" >
+                app:mvLocale="@{searchVM.locale}"
+                app:mvZoomScale="@{searchVM.zoomScale}" >
             </com.xynotec.dictdroid.control.MeanView>
 
 

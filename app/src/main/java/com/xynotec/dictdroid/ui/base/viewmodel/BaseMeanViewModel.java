@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 
 import com.xynotec.dagger.BaseViewModel;
 import com.xynotec.dictdroid.data.DataManager;
@@ -22,6 +23,7 @@ public class BaseMeanViewModel extends BaseViewModel {
     final ObservableField<String> mMean = new ObservableField<>();
     final ObservableBoolean mInFav = new ObservableBoolean();
     final ObservableField<Locale> mLccale = new ObservableField<>();
+    final ObservableInt mZoomScale = new ObservableInt();
 
     public BaseMeanViewModel(DataManager dataManager) {
         super(dataManager);
@@ -33,8 +35,6 @@ public class BaseMeanViewModel extends BaseViewModel {
         mOrginMean = mean;
 
         mean = HtmlConverter.String_htmlEncode(mean, getDataManager().getDictSource());
-        float zoomScale = getDataManager().getZoomScale()/100.0f;
-        mean = HtmlConverter.update4ViewPort(mean, zoomScale);
 
         int sourceLang = getDataManager().getSourceLang();
         Locale locale = LangConst.getLocale(sourceLang);
@@ -43,6 +43,7 @@ public class BaseMeanViewModel extends BaseViewModel {
         mWord.set(word);
         mMean.set(mean);
         mLccale.set(locale);
+        mZoomScale.set(getDataManager().getZoomScale());
         mInFav.set(inFav);
     }
 
@@ -57,6 +58,16 @@ public class BaseMeanViewModel extends BaseViewModel {
     }
 
     public ObservableField<Locale> getLocale() { return mLccale;}
+
+    public void setZoomScale(int zoomScale)
+    {
+        mZoomScale.set(zoomScale);
+    }
+
+    public ObservableInt getZoomScale()
+    {
+        return mZoomScale;
+    }
 
     public ObservableBoolean getInFav() {
         return mInFav;

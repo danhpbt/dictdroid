@@ -1,5 +1,6 @@
 package com.xynotec.dictdroid.ui.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -57,4 +58,5 @@ public class SettingActivity extends BaseActivity<ActivitySettingsBinding, Setti
             });
         }
     }
+
 }

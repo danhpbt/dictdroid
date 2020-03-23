@@ -17,6 +17,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -101,7 +102,7 @@ public class MeanView extends LinearLayout
 		});
 	}
 
-    public void setWordMean(String word, String mean, boolean bInFavorite, Locale locale)
+    public void setWordMean(String word, String mean, boolean bInFavorite, Locale locale, int percentZoom)
     {
     	if (word == null || mean == null || locale == null)
     		return;
@@ -129,6 +130,8 @@ public class MeanView extends LinearLayout
 			_btnSpeaker.setVisibility(View.GONE);
 
 		_textWord.setText(word);
+
+		_webMean.getSettings().setTextZoom(percentZoom);
 		_webMean.loadDataWithBaseURL(null, mean,
 				MIMETYPE, ENCODING, "about:blank");
 

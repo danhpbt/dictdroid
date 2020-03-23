@@ -3,6 +3,7 @@ package com.xynotec.dictdroid.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -43,7 +44,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     final int REQ_CODE_SPEECH_INPUT = 9879;
 
     final static int SEARCH_FRAGMENT = 0;
-
 
     private AppBarConfiguration mAppBarConfiguration;
 

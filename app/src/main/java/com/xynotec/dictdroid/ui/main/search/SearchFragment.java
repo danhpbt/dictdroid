@@ -87,6 +87,12 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        updateZoomScale();
+    }
+
+    @Override
     public void onClickListener(int index) {
         showMean(index);
     }
@@ -113,5 +119,8 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
         mSearchViewModel.showMean(index);
     }
 
-
+    void updateZoomScale()
+    {
+        mSearchViewModel.updateZoomScale();
+    }
 }

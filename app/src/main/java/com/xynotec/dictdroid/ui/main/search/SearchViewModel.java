@@ -23,11 +23,6 @@ public class SearchViewModel extends BaseMeanViewModel {
 
     private static final String TAG = "SearchViewModel";
 
-    final ObservableField<String> mWord = new ObservableField<>();
-    final ObservableField<String> mMean = new ObservableField<>();
-    final ObservableBoolean mInFav = new ObservableBoolean();
-    final ObservableField<Locale> mLccale = new ObservableField<>();
-
     final ObservableInt mWordIndex = new ObservableInt();
     final ObservableInt mViewDisplay = new ObservableInt();
 
@@ -36,22 +31,23 @@ public class SearchViewModel extends BaseMeanViewModel {
 
         mWordIndex.set(0);
         mViewDisplay.set(SEARCH_VIEW);
+
     }
 
-    public void openDict(String path)
-    {
-        getDataManager().openDict(path);
-    }
+//    public void openDict(String path)
+//    {
+//        getDataManager().openDict(path);
+//    }
 
     public int numWord()
     {
         return getDataManager().numWordInDict();
     }
 
-    public String getDictWord(int index)
-    {
-        return getDataManager().getDictWord(index);
-    }
+//    public String getDictWord(int index)
+//    {
+//        return getDataManager().getDictWord(index);
+//    }
 
     public void onEditSearch(String word)
     {
@@ -93,10 +89,17 @@ public class SearchViewModel extends BaseMeanViewModel {
         setMean(word, mean);
     }
 
+    public void updateZoomScale()
+    {
+        if (mViewDisplay.get() == MEAN_VIEW)
+            setZoomScale(getDataManager().getZoomScale());
+    }
+
     private void insertUpdateHistory(String word, String mean, int dictSource)
     {
         History history = new History();
         history.setWordMean(word, mean, dictSource);
         getDataManager().insertHistory(history);
     }
+
 }

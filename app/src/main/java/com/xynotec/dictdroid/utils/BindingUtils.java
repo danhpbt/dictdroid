@@ -36,13 +36,13 @@ public final class BindingUtils {
     }
 
 
-    @BindingAdapter({"mvWord", "mvMean", "mvInFavorite", "mvLocale"})
-    public static void setMeanView(MeanView meanView, String word, String mean, boolean bInFav, Locale locale) {
+    @BindingAdapter({"mvWord", "mvMean", "mvInFavorite", "mvLocale", "mvZoomScale"})
+    public static void setMeanView(MeanView meanView, String word, String mean, boolean bInFav, Locale locale, int zoomScale) {
         //hide keyboard before display
         Activity activity = (Activity)meanView.getContext();
         DeviceUtils.hideEmulatorKeyboard(activity);
 
-        meanView.setWordMean(word, mean, bInFav, locale);
+        meanView.setWordMean(word, mean, bInFav, locale, zoomScale);
     }
 
     @BindingAdapter("flipperIndex")

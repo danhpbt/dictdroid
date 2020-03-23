@@ -35,7 +35,8 @@
                 app:mvWord="@{meanVM.word}"
                 app:mvMean="@{meanVM.mean}"
                 app:mvInFavorite="@{meanVM.inFav}"
-                app:mvLocale="@{meanVM.locale}" />
+                app:mvLocale="@{meanVM.locale}"
+                app:mvZoomScale="@{meanVM.zoomScale}"/>
 
             <!--com.google.android.gms.ads.AdView
                 xmlns:ads="http://schemas.android.com/apk/res-auto"
