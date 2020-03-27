@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     doMoreApps();
 
                 } else if (id == R.id.nav_remove_ads) {
-                    //doRemoveAds();
+                    doRemoveAds();
 
                 } else if (id == R.id.nav_setting) {
                     doSettings();
@@ -187,16 +187,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public void executeQuickSearch()
     {
         CommonUtils.showInfoDlg(this, "Not implement yet");
-
-//        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.canDrawOverlays(this)) ||
-//                (Build.VERSION.SDK_INT < Build.VERSION_CODES.M))
-//        {
-//            Intent intent = new Intent(this, QuickSearchService.class);
-//            intent.putExtra(QuickSearchService.QUICK_SEARCH_STATE, QuickSearchService.QS_ACTION_QUICK_SEARCH);
-//            startService(intent);
-//
-//            showQuickSearchUserGuide();
-//        }
     }
 
     void doSwapDict()
@@ -270,6 +260,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://search?q=pub:Xynotec"));
         startActivity(intent);
+    }
+
+    private void doRemoveAds()
+    {
+        CommonUtils.showInfoDlg(this, "Not implement yet");
     }
 
     private void doSettings() {
